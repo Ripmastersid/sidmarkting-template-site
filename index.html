@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sidmarkting — Templates Profissionais Editáveis</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=DM+Sans:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    'display': ['Fraunces', 'serif'],
+                    'sans': ['DM Sans', 'system-ui', 'sans-serif'],
+                },
+                colors: {
+                    'navy': '#1e3a5f',
+                    'navy-light': '#2e5a8f',
+                    'navy-dark': '#0f1f33',
+                    'cyan': '#00d4ff',
+                    'gray-light': '#e8eef5',
+                    'gray': '#6b7280',
+                    'graphite': '#2d3748',
+                    'ink': '#1a202c',
+                    'paper': '#f7fafc',
+                }
+            }
+        }
+    }
+</script>
+<style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background: #f7fafc; color: #1a202c; -webkit-font-smoothing: antialiased; }
+    .font-display { font-family: 'Fraunces', serif; }
+    ::selection { background: #00d4ff33; }
+    
+    /* Gradiente para títulos */
+    .gradient-text {
+        background: linear-gradient(135deg, #1e3a5f 0%, #00d4ff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .grain-bg { position: relative; }
+    .grain-bg::before {
+        content: '';
+        position: absolute; inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        opacity: 0.025;
+        pointer-events: none;
+    }
+    .soft-shadow { box-shadow: 0 8px 40px rgba(30, 58, 95, 0.08); }
+    .soft-shadow-sm { box-shadow: 0 2px 18px rgba(30, 58, 95, 0.06); }
+    .product-card img { transition: transform 0.7s cubic-bezier(.2,.8,.2,1); }
+    .product-card:hover img { transform: scale(1.045); }
+    .marquee-track { animation: marquee 32s linear infinite; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .editor-scroll::-webkit-scrollbar { width: 6px; }
+    .editor-scroll::-webkit-scrollbar-thumb { background: #2e5a8f; border-radius: 3px; }
+    input, textarea, select { font-family: 'DM Sans', sans-serif; }
+    .field {
+        width: 100%; background: #f0f4f8; border: 1.5px solid #c5d0e0; border-radius: 12px;
+        padding: 11px 14px; font-size: 14.5px; color: #1a202c; outline: none; transition: all .15s;
+    }
+    .field:focus { border-color: #00d4ff; box-shadow: 0 0 0 3px #00d4ff22; background: #fff; }
+    .field-sm { padding: 8px 12px; font-size: 13.8px; border-radius: 10px;}
+    .label-sm { font-size: 11px; text-transform: uppercase; letter-spacing: .07em; color: #6b7280; font-weight: 600; margin-bottom: 5px; display: block;}
+    .fade-in { animation: fadeUp .5s ease both; }
+    @keyframes fadeUp { from { opacity:0; transform: translateY(12px);} to {opacity:1; transform:translateY(0);} }
+    .file-drop {
+        border: 1.6px dashed #a0aec0;
+        border-radius: 14px;
+        background: #e8eef5;
+        transition: all .15s;
+    }
+    .file-drop:hover { border-color: #2e5a8f; background: #dce4ed;}
+</style>
+</head>
+<body class="bg-paper text-ink antialiased">
+    <!-- Top Bar -->
+    <div id="integration-bar" class="w-full bg-[#0f1f33] text-[#e8f1f8] text-[13px] md:text-[13.5px]">
+        <div class="max-w-6xl mx-auto px-5 md:px-10 py-[10px] flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-center">
+            <span class="flex items-center gap-2 font-medium">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#00d4ff] animate-pulse"></span>
+                Templates profissionais e 100% editáveis
+            </span>
+            <span class="hidden sm:block text-slate-400">•</span>
+            <span class="text-[#b8c5d6]">Sidmarkting - Estratégia, criatividade e resultados</span>
+            <button onclick="openEditor()" class="ml-1 underline underline-offset-4 decoration-[#00d4ff]/70 hover:decoration-[#00d4ff] transition">Personalize agora →</button>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-40 bg-paper/90 backdrop-blur-xl border-b border-gray-light">
+        <div class="max-w-6xl mx-auto px-5 md:px-10 h-[72px] flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div id="brand-logo-box" class="w-9 h-9 rounded-[11px] bg-gradient-to-br from-[#1e3a5f] to-[#00d4ff] flex items-center justify-center text-[14px] font-display font-600 text-white overflow-hidden shrink-0">
+                    <span id="brand-initial">S</span>
+                    <img id="brand-logo-img" class="w-full h-full object-cover hidden" alt="Logo">
+                </div>
+                <div>
+                    <div id="brand-name-display" class="font-display text-[19px] tracking-tight leading-none gradient-text">Sidmarkting</div>
+                    <div class="text-[11px] text-gray -mt-[1px] hidden sm:block">Templates Profissionais</div>
+                </div>
+            </div>
+            <nav class="hidden lg:flex items-center gap-8 text-[14px] text-[#4a5568]">
+                <a href="#templates" class="hover:text-navy transition">Templates</a>
+                <a href="#servicos" class="hover:text-navy transition">Serviços</a>
+                <a href="#galeria" class="hover:text-navy transition">Portfólio</a>
+                <a href="#sobre" class="hover:text-navy transition">Sobre</a>
+                <a href="#contato" class="hover:text-navy transition">Contato</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <a id="header-whatsapp" href="#" target="_blank" class="hidden sm:inline-flex text-[13.5px] text-[#4a5568] hover:text-navy">WhatsApp</a>
+                <button onclick="openEditor()" class="inline-flex items-center gap-2 bg-gradient-to-r from-[#1e3a5f] to-[#00d4ff] text-white px-4 py-2.5 rounded-full text-[13.5px] font-500 hover:shadow-lg transition">
+                    <i data-lucide="pen-tool" class="w-[15px] h-[15px]"></i>
+                    <span class="hidden sm:inline">Personalizar</span>
+                    <span class="sm:hidden">Editar</span>
+                </button>
+                <button id="mobile-menu-btn" class="lg:hidden p-2 -mr-2 text-[#4a5568]"><i data-lucide="menu" class="w-5 h-5"></i></button>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-gray-light bg-paper">
+            <div class="px-5 py-4 flex flex-col gap-3 text-[15px] text-[#4a5568]">
+                <a href="#templates" class="py-1">Templates</a>
+                <a href="#servicos" class="py-1">Serviços</a>
+                <a href="#galeria" class="py-1">Portfólio</a>
+                <a href="#sobre" class="py-1">Sobre</a>
+                <a href="#contato" class="py-1">Contato</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="relative grain-bg overflow-hidden">
+        <div class="max-w-6xl mx-auto px-5 md:px-10 py-16 md:py-24 lg:py-28">
+            <div class="grid lg:grid-cols-12 gap-10 lg:gap-10 items-center">
+                <div class="lg:col-span-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#e8f1f8] border border-[#b8c5d6] text-[12px] text-[#1e3a5f] font-500 mb-6">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                        Site 100% editável — pronto para seu negócio
+                    </div>
+                    <h1 id="hero-title" class="font-display text-[48px] sm:text-[64px] lg:text-[76px] leading-[0.93] tracking-[-0.025em] gradient-text">
+                        Templates<br>que vendem<br>por você.
+                    </h1>
+                    <p id="hero-tagline" class="mt-6 text-[17.5px] leading-relaxed text-[#4a5568] max-w-[440px]">
+                        Sites profissionais, editáveis e otimizados. Escolha seu template, personalize e coloque no ar em minutos. Suporte completo incluso.
+                    </p>
+                    <div class="mt-8 flex flex-wrap gap-3">
+                        <a href="#templates" class="bg-gradient-to-r from-[#1e3a5f] to-[#00d4ff] hover:shadow-lg text-white px-5 py-3.5 rounded-full text-[14.5px] font-500 transition soft-shadow-sm">Ver Templates</a>
+                        <button onclick="openEditor()" class="px-5 py-3.5 rounded-full text-[14.5px] font-500 border border-[#2e5a8f] hover:border-[#1e3a5f] bg-white transition text-[#2e5a8f]">Personalizar Agora</button>
+                    </div>
+                    <div class="mt-8 flex flex-wrap items-center gap-6 text-[13px] text-[#6b7280]">
+                        <span class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-[#00d4ff]"></i> Edição visual fácil</span>
+                        <span class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-[#00d4ff]"></i> Responsivo</span>
+                        <span class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-[#00d4ff]"></i> Suporte incluso</span>
+                    </div>
+                </div>
+                <!-- Hero visual -->
+                <div class="lg:col-span-6 relative">
+                    <div class="relative rounded-[28px] overflow-hidden soft-shadow bg-[#e8eef5] aspect-[4/3.15] lg:aspect-[4/3.4]">
+                        <img id="hero-image" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80" alt="Dashboard profissional" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#1e3a5f]/20 via-transparent to-transparent pointer-events-none"></div>
+                        <!-- floating card -->
+                        <div class="absolute bottom-4 left-4 right-4 sm:left-5 sm:right-auto sm:w-[300px] bg-white/95 backdrop-blur-md rounded-[18px] px-4 py-3.5 soft-shadow-sm border border-gray-light/70">
+                            <div class="text-[11px] uppercase tracking-wider text-[#6b7280] font-600">Template Premium</div>
+                            <div class="font-display text-[19px] mt-0.5 gradient-text">Pronto para usar</div>
+                            <div class="text-[13px] text-[#4a5568] mt-1">Edite textos, cores e imagens em tempo real.</div>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-5 -right-3 hidden md:block bg-white rounded-2xl px-4 py-3 soft-shadow-sm border border-gray-light text-[12.5px] text-[#4a5568]">
+                        Deploy em 2 minutos
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Marquee -->
+        <div class="border-y border-gray-light bg-[#e8eef5]/60">
+            <div class="overflow-hidden py-3.5 text-[12.8px] uppercase tracking-wider text-[#6b7280]">
+                <div class="marquee-track flex whitespace-nowrap gap-12">
+                    <span>✓ Templates profissionais • ✓ Edição visual intuitiva • ✓ Suporte Sidmarkting • ✓ Deploy na Vercel • ✓ SEO otimizado •</span>
+                    <span>✓ Templates profissionais • ✓ Edição visual intuitiva • ✓ Suporte Sidmarkting • ✓ Deploy na Vercel • ✓ SEO otimizado •</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TEMPLATES -->
+    <section id="templates" class="max-w-6xl mx-auto px-5 md:px-10 py-20 md:py-28">
+        <div class="flex flex-wrap items-end justify-between gap-4 mb-10">
+            <div>
+                <div class="text-[11px] uppercase tracking-widest text-[#6b7280] font-600">Catálogo</div>
+                <h2 class="font-display text-[40px] md:text-[52px] tracking-tight gradient-text">Templates Disponíveis</h2>
+            </div>
+            <div class="text-[14px] text-[#4a5568] max-w-sm">Escolha o template ideal para seu negócio. Todos são editáveis e responsivos.</div>
+        </div>
+        <div id="products-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-7 gap-y-12">
+            <!-- JS renders -->
+        </div>
+        <div class="mt-10 text-center">
+            <button onclick="openEditor('produtos')" class="text-[14px] text-[#4a5568] hover:text-navy underline underline-offset-[6px] decoration-gray-light">+ Adicionar mais templates</button>
+        </div>
+    </section>
+
+    <!-- SERVIÇOS -->
+    <section id="servicos" class="bg-[#e8eef5] border-y border-gray-light grain-bg relative">
+        <div class="max-w-6xl mx-auto px-5 md:px-10 py-20 md:py-24">
+            <div class="grid lg:grid-cols-12 gap-12">
+                <div class="lg:col-span-5">
+                    <div class="text-[11px] uppercase tracking-widest text-[#6b7280] font-600">O que ofereço</div>
+                    <h2 class="font-display text-[40px] md:text-[50px] tracking-tight gradient-text mt-1">Serviços</h2>
+                    <p class="text-[#4a5568] mt-4 leading-relaxed">
+                        Além dos templates prontos, ofereço personalização completa, suporte técnico e manutenção mensal para seu site sempre atualizado.
+                    </p>
+                    <div class="mt-6 inline-flex items-center gap-2 text-[13px] text-[#4a5568] bg-white border border-gray-light rounded-full px-3.5 py-2">
+                        <i data-lucide="info" class="w-3.5 h-3.5"></i>
+                        Pacotes de manutenção a partir de R$ 200/mês
+                    </div>
+                </div>
+                <div class="lg:col-span-7">
+                    <div id="services-list" class="divide-y divide-[#c5d0e0]">
+                        <!-- JS -->
+                    </div>
+                    <button onclick="openEditor('servicos')" class="mt-6 text-[13.5px] text-[#4a5568] hover:text-navy underline underline-offset-4">Editar serviços</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERIA -->
+    <section id="galeria" class="max-w-6xl mx-auto px-5 md:px-10 py-20 md:py-24">
+        <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
+            <div>
+                <div class="text-[11px] uppercase tracking-widest text-[#6b7280] font-600">Portfólio</div>
+                <h2 class="font-display text-[40px] md:text-[50px] tracking-tight gradient-text">Galeria</h2>
+            </div>
+            <button onclick="openEditor('galeria')" class="text-[13.5px] text-[#4a5568] hover:text-navy underline underline-offset-4">Enviar minhas fotos</button>
+        </div>
+        <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+            <!-- JS -->
+        </div>
+        <div class="mt-16 bg-[#e8eef5] border border-gray-light rounded-[26px] px-6 md:px-10 py-9 md:py-12 grid md:grid-cols-3 gap-8 text-[14.5px] text-[#4a5568] soft-shadow-sm">
+            <div>
+                <div class="font-display text-[22px] text-navy mb-2">1. Escolha o template</div>
+                Selecione o modelo ideal para seu negócio. Todos são responsivos e editáveis.
+            </div>
+            <div>
+                <div class="font-display text-[22px] text-navy mb-2">2. Personalize</div>
+                Edite textos, cores, imagens e produtos pelo painel visual intuitivo.
+            </div>
+            <div>
+                <div class="font-display text-[22px] text-navy mb-2">3. Publique</div>
+                Deploy automático na Vercel. Site no ar em minutos com suporte Sidmarkting.
+            </div>
+        </div>
+    </section>
+
+    <!-- SOBRE -->
+    <section id="sobre" class="bg-[#e8eef5] border-y border-gray-light">
+        <div class="max-w-6xl mx-auto px-5 md:px-10 py-20 md:py-24 grid lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-6">
+                <div class="rounded-[26px] overflow-hidden soft-shadow aspect-[5/4] bg-[#dce4ed]">
+                    <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1200&q=80" alt="Sidmarkting" class="w-full h-full object-cover opacity-95">
+                </div>
+            </div>
+            <div class="lg:col-span-6 lg:pl-6">
+                <div class="text-[11px] uppercase tracking-widest text-[#6b7280] font-600">Sobre</div>
+                <h2 id="about-title" class="font-display text-[38px] md:text-[46px] tracking-tight mt-1 gradient-text">Sidmarkting - Sua marca no digital.</h2>
+                <p id="about-text" class="text-[#4a5568] leading-relaxed mt-4 text-[16.5px]">
+                    Especialista em criação de templates profissionais e editáveis. Ofereço soluções completas em web design com foco em resultados reais para seu negócio.
+                </p>
+                <div class="mt-6 flex flex-wrap gap-6 text-[13.5px] text-[#4a5568]">
+                    <span>• Templates premium</span>
+                    <span>• Suporte técnico</span>
+                    <span>• SEO otimizado</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section id="contato" class="max-w-6xl mx-auto px-5 md:px-10 py-20 md:py-24">
+        <div class="bg-gradient-to-br from-[#0f1f33] to-[#1e3a5f] text-[#e8f1f8] rounded-[30px] px-7 md:px-14 py-14 md:py-16 soft-shadow relative overflow-hidden grain-bg">
+            <div class="grid lg:grid-cols-12 gap-10 items-center relative z-10">
+                <div class="lg:col-span-7">
+                    <h2 class="font-display text-[36px] md:text-[50px] leading-[1.05] tracking-tight text-white">Pronto para ter seu site profissional?</h2>
+                    <p class="mt-4 text-[#b8c5d6] text-[16.5px] max-w-lg leading-relaxed">
+                        Entre em contato e vamos criar o template perfeito para seu negócio. Suporte completo, edição facilitada e resultados garantidos.
+                    </p>
+                </div>
+                <div class="lg:col-span-5 lg:text-right">
+                    <div class="flex flex-wrap lg:justify-end gap-3">
+                        <button onclick="openEditor()" class="bg-white text-[#1e3a5f] px-5 py-3.5 rounded-full text-[14.5px] font-600 hover:bg-[#e8eef5] transition">Personalizar Agora</button>
+                        <a id="cta-whatsapp" href="#" target="_blank" class="border border-[#00d4ff] px-5 py-3.5 rounded-full text-[14.5px] font-500 text-[#00d4ff] hover:bg-[#00d4ff]/10 transition">Falar no WhatsApp</a>
+                    </div>
+                    <div class="text-[12.5px] text-[#b8c5d6] mt-4">Resposta rápida • Orçamento sem compromisso</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Socials -->
+        <div class="mt-10 flex flex-wrap items-center justify-between gap-6 text-[14px] text-[#4a5568]">
+            <div class="flex flex-wrap items-center gap-5" id="footer-socials">
+                <!-- JS -->
+            </div>
+            <div class="text-[13.5px] text-[#6b7280]">sidnei.santos.marcketing@gmail.com</div>
+        </div>
+    </section>
+
+    <footer class="border-t border-gray-light py-10 text-center text-[13px] text-[#6b7280]">
+        <div class="max-w-6xl mx-auto px-5 md:px-10">
+            <div class="font-display text-[20px] text-[#1e3a5f] mb-2 gradient-text" id="footer-brand">Sidmarkting</div>
+            <p>© <span id="footer-year"></span> <span class="footer-brand-inline">Sidmarkting</span>. Templates profissionais editáveis.</p>
+            <p class="mt-2 text-[12.5px]">Estratégia, criatividade e resultados para sua marca.</p>
+        </div>
+    </footer>
+
+    <!-- Floating Edit Button -->
+    <button onclick="openEditor()" class="fixed bottom-5 right-5 z-40 lg:hidden bg-gradient-to-r from-[#1e3a5f] to-[#00d4ff] text-white rounded-full px-4 py-3 text-[13.5px] font-600 shadow-xl flex items-center gap-2">
+        <i data-lucide="pen-line" class="w-4 h-4"></i> Editar
+    </button>
+
+    <!-- EDITOR DRAWER -->
+    <div id="editor-overlay" class="fixed inset-0 bg-black/45 z-[80] hidden opacity-0 transition-opacity"></div>
+    <aside id="editor-drawer" class="fixed right-0 top-0 h-full w-full sm:w-[460px] bg-paper z-[90] shadow-2xl translate-x-full transition-transform duration-300 flex flex-col">
+        <!-- Header -->
+        <div class="flex items-center justify-between px-5 py-4 border-b border-gray-light bg-[#e8eef5]/80">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-[#1e3a5f] to-[#00d4ff] flex items-center justify-center text-white"><i data-lucide="sliders-horizontal" class="w-4 h-4"></i></div>
+                <div>
+                    <div class="font-display text-[19px] leading-tight gradient-text">Personalizar Site</div>
+                    <div class="text-[11.5px] text-[#6b7280] -mt-0.5">Alterações salvas automaticamente</div>
+                </div>
+            </div>
+            <button onclick="closeEditor()" class="p-2 rounded-lg hover:bg-[#e8eef5] text-[#4a5568]"><i data-lucide="x" class="w-[18px] h-[18px]"></i></button>
+        </div>
+
+        <!-- Tabs -->
+        <div class="px-5 pt-3 border-b border-gray-light bg-paper">
+            <nav class="flex gap-5 text-[13.5px] font-500 overflow-x-auto" id="editor-tabs">
+                <button data-tab="identidade" class="editor-tab border-b-2 border-[#1e3a5f] text-[#1e3a5f] pb-3 whitespace-nowrap">Identidade</button>
+                <button data-tab="redes" class="editor-tab border-b-2 border-transparent text-[#6b7280] pb-3 whitespace-nowrap">Redes</button>
+                <button data-tab="produtos" class="editor-tab border-b-2 border-transparent text-[#6b7280] pb-3 whitespace-nowrap">Templates</button>
+                <button data-tab="servicos" class="editor-tab border-b-2 border-transparent text-[#6b7280] pb-3 whitespace-nowrap">Serviços</button>
+                <button data-tab="galeria" class="editor-tab border-b-2 border-transparent text-[#6b7280] pb-3 whitespace-nowrap">Galeria</button>
+            </nav>
+        </div>
+
+        <!-- Content -->
+        <div class="flex-1 overflow-y-auto editor-scroll">
+            <!-- IDENTIDADE -->
+            <div class="editor-pane p-5 space-y-5" data-pane="identidade">
+                <div>
+                    <label class="label-sm">Nome da marca</label>
+                    <input id="e-brand-name" class="field" placeholder="Ex: Sua Empresa">
+                </div>
+                <div class="grid grid-cols-1 gap-4">
+                    <div>
+                        <label class="label-sm">Slogan / frase da capa</label>
+                        <textarea id="e-tagline" rows="2" class="field" placeholder="Uma frase curta sobre seu negócio"></textarea>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="label-sm">Cor primária</label>
+                        <input id="e-accent" type="color" value="#1e3a5f" class="field h-[46px] p-1.5 cursor-pointer">
+                    </div>
+                    <div>
+                        <label class="label-sm">WhatsApp (com DDI)</label>
+                        <input id="e-whatsapp" class="field" placeholder="5521966053200">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="label-sm">Logo da marca</label>
+                    <label class="file-drop block px-4 py-5 text-center cursor-pointer">
+                        <div class="text-[13.5px] text-[#4a5568]"><strong class="text-navy">Clique para enviar</strong> ou arraste sua logo</div>
+                        <div class="text-[12px] text-[#6b7280] mt-1">PNG / JPG / SVG – até 2MB</div>
+                        <input id="e-logo-input" type="file" accept="image/*" class="hidden">
+                    </label>
+                    <div id="e-logo-preview" class="hidden mt-2 text-[12.5px] text-[#4a5568]">Logo carregada ✓ <button type="button" onclick="removeLogo()" class="underline ml-2 text-[#00d4ff]">Remover</button></div>
+                </div>
+
+                <div>
+                    <label class="label-sm">Foto de capa (Hero)</label>
+                    <label class="file-drop block px-4 py-5 text-center cursor-pointer">
+                        <div class="text-[13.5px] text-[#4a5568]"><strong class="text-navy">Enviar foto de capa</strong></div>
+                        <div class="text-[12px] text-[#6b7280] mt-1">Recomendado 1400×1000px</div>
+                        <input id="e-hero-input" type="file" accept="image/*" class="hidden">
+                    </label>
+                    <div id="e-hero-preview" class="hidden mt-2 text-[12.5px] text-[#4a5568]">Foto carregada ✓ <button type="button" onclick="removeHero()" class="underline ml-2 text-[#00d4ff]">Remover</button></div>
+                </div>
+
+                <div class="pt-2 border-t border-gray-light/50">
+                    <label class="label-sm">Sobre o negócio</label>
+                    <input id="e-about-title" class="field mb-2" placeholder="Título do bloco Sobre">
+                    <textarea id="e-about-text" rows="3" class="field" placeholder="Conte um pouco da sua história..."></textarea>
+                </div>
+
+                <div class="bg-[#e8eef5] border border-[#c5d0e0] rounded-xl px-3.5 py-3 text-[12.8px] text-[#4a5568] leading-relaxed">
+                    Dica: prefere me enviar tudo? Me mande suas imagens, logo, textos e lista por WhatsApp que eu deixo pronto.
+                </div>
+            </div>
+
+            <!-- REDES -->
+            <div class="editor-pane p-5 space-y-4 hidden" data-pane="redes">
+                <p class="text-[13.6px] text-[#4a5568]">Cole os links completos.</p>
+                <div><label class="label-sm">Instagram</label><input id="e-instagram" class="field field-sm" placeholder="https://instagram.com/..."></div>
+                <div><label class="label-sm">Facebook</label><input id="e-facebook" class="field field-sm" placeholder="https://facebook.com/..."></div>
+                <div><label class="label-sm">Pinterest</label><input id="e-pinterest" class="field field-sm" placeholder="https://pinterest.com/..."></div>
+                <div><label class="label-sm">TikTok</label><input id="e-tiktok" class="field field-sm" placeholder="https://tiktok.com/@..."></div>
+                <div><label class="label-sm">WhatsApp link</label><input id="e-walink" class="field field-sm" placeholder="https://wa.me/5521..."></div>
+                <div><label class="label-sm">Site</label><input id="e-website" class="field field-sm" placeholder="https://..."></div>
+            </div>
+
+            <!-- PRODUTOS -->
+            <div class="editor-pane p-5 hidden" data-pane="produtos">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-[13px] text-[#4a5568]">Seus templates</div>
+                    <button onclick="addProduct()" class="text-[12.5px] bg-[#1e3a5f] text-white px-3 py-1.5 rounded-full">+ Novo</button>
+                </div>
+                <div id="editor-products-list" class="space-y-3"></div>
+            </div>
+
+            <!-- SERVIÇOS -->
+            <div class="editor-pane p-5 hidden" data-pane="servicos">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-[13px] text-[#4a5568]">Seus serviços</div>
+                    <button onclick="addService()" class="text-[12.5px] bg-[#1e3a5f] text-white px-3 py-1.5 rounded-full">+ Novo</button>
+                </div>
+                <div id="editor-services-list" class="space-y-3"></div>
+            </div>
+
+            <!-- GALERIA -->
+            <div class="editor-pane p-5 hidden" data-pane="galeria">
+                <label class="file-drop block px-4 py-6 text-center cursor-pointer mb-4">
+                    <div class="text-[13.5px]"><strong class="text-navy">Enviar fotos</strong></div>
+                    <div class="text-[12px] text-[#6b7280] mt-1">Selecione várias de uma vez</div>
+                    <input id="e-gallery-input" type="file" accept="image/*" multiple class="hidden">
+                </label>
+                <div id="editor-gallery-grid" class="grid grid-cols-3 gap-2"></div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="border-t border-gray-light bg-[#e8eef5]/90 px-5 py-3.5">
+            <div class="flex flex-wrap gap-2 text-[12.8px]">
+                <button onclick="exportSiteData()" class="px-3 py-2 rounded-lg border border-[#2e5a8f] bg-white hover:bg-[#e8eef5]">Exportar</button>
+                <label class="px-3 py-2 rounded-lg border border-[#2e5a8f] bg-white hover:bg-[#e8eef5] cursor-pointer">Importar<input type="file" accept=".json" id="import-input" class="hidden"></label>
+                <button onclick="resetDemo()" class="px-3 py-2 rounded-lg text-[#6b7280] hover:text-navy">Resetar</button>
+                <div class="flex-1"></div>
+                <button onclick="closeEditor()" class="px-4 py-2 rounded-lg bg-gradient-to-r from-[#1e3a5f] to-[#00d4ff] text-white font-500">Concluir</button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- TOAST -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#1e3a5f] text-white text-[13.5px] px-4 py-2.5 rounded-full shadow-xl z-[200] opacity-0 pointer-events-none transition-all duration-300">Salvo!</div>
+
+<script>
+/* STATE */
+const DEFAULT_DATA = {
+    brand: {
+        name: "Sidmarkting",
+        tagline: "Templates profissionais que vendem por você.",
+        logo: null,
+        heroImage: null,
+        accent: "#1e3a5f",
+        whatsapp: "5521966053200",
+        aboutTitle: "Sidmarkting - Sua marca no digital.",
+        aboutText: "Especialista em criação de templates profissionais e editáveis. Ofereço soluções completas em web design."
+    },
+    socials: {
+        instagram: "https://www.instagram.com/syd.shapper/",
+        facebook: "https://www.facebook.com/share/1HBzgeoByk/",
+        pinterest: "https://pin.it/1C8C2hnnp",
+        tiktok: "https://www.tiktok.com/@sidneisantosatv",
+        whatsappLink: "",
+        website: ""
+    },
+    products: [
+        {id: "p1", name: "Template Ateliê", price: "1.500", image: "https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&w=800&q=80", desc: "Perfeito para artesãos e ateliês. Design elegante e terroso."},
+        {id: "p2", name: "Template Restaurante", price: "1.800", image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80", desc: "Cardápio online, reservas e delivery integrados."},
+        {id: "p3", name: "Template Loja", price: "2.200", image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=800&q=80", desc: "E-commerce completo com catálogo de produtos."},
+        {id: "p4", name: "Template Advocacia", price: "2.000", image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80", desc: "Profissional e sério para advogados e consultores."},
+        {id: "p5", name: "Template Academia", price: "1.600", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80", desc: "Dinâmico e motivacional para academias e personal."},
+        {id: "p6", name: "Template Fotógrafo", price: "1.900", image: "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=800&q=80", desc: "Portfólio visual impactante para fotógrafos."}
+    ],
+    services: [
+        {id:"s1", name:"Criação de Template Personalizado", price:"A partir de R$ 1.500", desc:"Template exclusivo para seu negócio, totalmente editável e responsivo."},
+        {id:"s2", name:"Suporte e Manutenção Mensal", price:"R$ 200 - R$ 500/mês", desc:"Atualizações, backup, suporte técnico e alterações mensais inclusas."},
+        {id:"s3", name:"Personalização de Template Existente", price:"R$ 800 - R$ 1.500", desc:"Adapto um template existente para sua identidade visual e necessidades."},
+        {id:"s4", name:"Consultoria em Web Design", price:"R$ 150/hora", desc:"Orientação sobre melhorias, SEO, performance e conversão do seu site."}
+    ],
+    gallery: [
+        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=700&q=80",
+        "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=700&q=80",
+        "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=700&q=80",
+        "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=700&q=80"
+    ]
+};
+
+let siteData = loadData();
+
+function loadData(){
+    try {
+        const raw = localStorage.getItem('sidmarkting_site_v1');
+        if(raw) return JSON.parse(raw);
+    } catch(e){}
+    return JSON.parse(JSON.stringify(DEFAULT_DATA));
+}
+
+function saveData(){
+    localStorage.setItem('sidmarkting_site_v1', JSON.stringify(siteData));
+    renderAll();
+    showToast('Salvo');
+}
+
+function renderAll(){
+    document.getElementById('brand-name-display').textContent = siteData.brand.name;
+    document.getElementById('footer-brand').textContent = siteData.brand.name;
+    document.querySelectorAll('.footer-brand-inline').forEach(el => el.textContent = siteData.brand.name);
+    document.getElementById('hero-tagline').textContent = siteData.brand.tagline;
+    document.getElementById('about-title').textContent = siteData.brand.aboutTitle;
+    document.getElementById('about-text').textContent = siteData.brand.aboutText;
+    document.title = siteData.brand.name + " — Templates Profissionais";
+
+    const logoImg = document.getElementById('brand-logo-img');
+    const logoInitial = document.getElementById('brand-initial');
+    if(siteData.brand.logo){
+        logoImg.src = siteData.brand.logo;
+        logoImg.classList.remove('hidden');
+        logoInitial.classList.add('hidden');
+    } else {
+        logoImg.classList.add('hidden');
+        logoInitial.classList.remove('hidden');
+        logoInitial.textContent = (siteData.brand.name || 'S').trim().charAt(0).toUpperCase();
+    }
+
+    if(siteData.brand.heroImage){
+        document.getElementById('hero-image').src = siteData.brand.heroImage;
+    }
+
+    document.documentElement.style.setProperty('--accent', siteData.brand.accent);
+    const styleTag = document.getElementById('dynamic-accent');
+    if(!styleTag){
+        const s = document.createElement('style');
+        s.id = 'dynamic-accent';
+        document.head.appendChild(s);
+    }
+    document.getElementById('dynamic-accent').textContent = `
+        .from-navy-custom{ background-image: linear-gradient(135deg, ${siteData.brand.accent} 0%, #00d4ff 100%) !important;}
+        .text-accent-custom{ color: ${siteData.brand.accent} !important;}
+    `;
+
+    const waNum = siteData.brand.whatsapp.replace(/\D/g,'');
+    const waUrl = `https://wa.me/${waNum}?text=${encodeURIComponent('Olá! Vim pelo site e gostaria de mais informações.')}`;
+    document.getElementById('header-whatsapp').href = waUrl;
+    document.getElementById('cta-whatsapp').href = waUrl;
+
+    const grid = document.getElementById('products-grid');
+    grid.innerHTML = siteData.products.map(p => `
+        <article class="product-card group">
+            <div class="bg-[#e8eef5] rounded-[20px] overflow-hidden aspect-[4/4.6] relative">
+                <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/800x900/e8eef5/6b7280?text=Template'">
+                <button class="absolute right-3 top-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur flex items-center justify-center text-[#4a5568] opacity-0 group-hover:opacity-100 transition">
+                    <i data-lucide="heart" class="w-[16px] h-[16px]"></i>
+                </button>
+            </div>
+            <div class="pt-4 px-1">
+                <div class="flex items-start justify-between gap-3">
+                    <h3 class="font-display text-[22px] leading-snug gradient-text">${escapeHtml(p.name)}</h3>
+                    <div class="text-[15px] text-[#4a5568] pt-1 whitespace-nowrap">R$ ${escapeHtml(p.price)}</div>
+                </div>
+                <p class="text-[13.7px] text-[#6b7280] mt-1">${escapeHtml(p.desc || '')}</p>
+            </div>
+        </article>
+    `).join('') || `<div class="col-span-full text-[#6b7280]">Nenhum template ainda.</div>`;
+
+    const sList = document.getElementById('services-list');
+    sList.innerHTML = siteData.services.map(s => `
+        <div class="py-7 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
+            <div>
+                <div class="font-display text-[24px] gradient-text">${escapeHtml(s.name)}</div>
+                <div class="text-[14px] text-[#4a5568] mt-1 max-w-xl">${escapeHtml(s.desc || '')}</div>
+            </div>
+            <div class="text-[14.5px] text-[#1e3a5f] sm:text-right whitespace-nowrap font-500">${escapeHtml(s.price || '')}</div>
+        </div>
+    `).join('') || `<div class="py-6 text-[#6b7280]">Nenhum serviço cadastrado.</div>`;
+
+    const gGrid = document.getElementById('gallery-grid');
+    const galleryImages = siteData.gallery.length ? siteData.gallery : [];
+    gGrid.innerHTML = galleryImages.map((src, i) => `
+        <div class="rounded-[18px] overflow-hidden bg-[#e8eef5] aspect-square ${i===0 ? 'md:col-span-2 md:row-span-2' : ''}">
+            <img src="${escapeHtml(src)}" class="w-full h-full object-cover" loading="lazy">
+        </div>
+    `).join('');
+
+    const socialMap = [
+        ['instagram', 'Instagram'],
+        ['facebook', 'Facebook'],
+        ['tiktok', 'TikTok'],
+        ['pinterest', 'Pinterest'],
+        ['website', 'Site']
+    ];
+    const socialLinks = socialMap.filter(([k]) => siteData.socials[k]).map(([k,label]) => `<a href="${escapeHtml(siteData.socials[k])}" target="_blank" rel="noopener" class="hover:text-navy underline underline-offset-4 decoration-gray-light">${label}</a>`).join('<span class="text-gray-light">•</span>');
+    document.getElementById('footer-socials').innerHTML = socialLinks || `<span class="text-[#6b7280]">Adicione seus links no painel.</span>`;
+
+    lucide.createIcons();
+}
+
+function escapeHtml(str){
+    return String(str || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+/* EDITOR */
+const editorOverlay = document.getElementById('editor-overlay');
+const editorDrawer = document.getElementById('editor-drawer');
+
+function openEditor(tab='identidade'){
+    editorOverlay.classList.remove('hidden');
+    requestAnimationFrame(()=>{
+        editorOverlay.classList.remove('opacity-0');
+        editorDrawer.classList.remove('translate-x-full');
+    });
+    switchEditorTab(tab);
+    fillEditorFields();
+    renderEditorLists();
+    document.body.style.overflow='hidden';
+}
+
+function closeEditor(){
+    editorOverlay.classList.add('opacity-0');
+    editorDrawer.classList.add('translate-x-full');
+    setTimeout(()=> editorOverlay.classList.add('hidden'), 220);
+    document.body.style.overflow='';
+}
+
+editorOverlay.addEventListener('click', closeEditor);
+
+document.querySelectorAll('.editor-tab').forEach(btn=>{
+    btn.addEventListener('click', ()=> switchEditorTab(btn.dataset.tab));
+});
+
+function switchEditorTab(name){
+    document.querySelectorAll('.editor-tab').forEach(b=>{
+        const active = b.dataset.tab === name;
+        b.classList.toggle('border-[#1e3a5f]', active);
+        b.classList.toggle('text-[#1e3a5f]', active);
+        b.classList.toggle('border-transparent', !active);
+        b.classList.toggle('text-[#6b7280]', !active);
+    });
+    document.querySelectorAll('.editor-pane').forEach(p=>{
+        p.classList.toggle('hidden', p.dataset.pane !== name);
+    });
+}
+
+function fillEditorFields(){
+    document.getElementById('e-brand-name').value = siteData.brand.name;
+    document.getElementById('e-tagline').value = siteData.brand.tagline;
+    document.getElementById('e-accent').value = siteData.brand.accent;
+    document.getElementById('e-whatsapp').value = siteData.brand.whatsapp;
+    document.getElementById('e-about-title').value = siteData.brand.aboutTitle;
+    document.getElementById('e-about-text').value = siteData.brand.aboutText;
+    document.getElementById('e-instagram').value = siteData.socials.instagram || '';
+    document.getElementById('e-facebook').value = siteData.socials.facebook || '';
+    document.getElementById('e-pinterest').value = siteData.socials.pinterest || '';
+    document.getElementById('e-tiktok').value = siteData.socials.tiktok || '';
+    document.getElementById('e-walink').value = siteData.socials.whatsappLink || '';
+    document.getElementById('e-website').value = siteData.socials.website || '';
+    document.getElementById('e-logo-preview').classList.toggle('hidden', !siteData.brand.logo);
+    document.getElementById('e-hero-preview').classList.toggle('hidden', !siteData.brand.heroImage);
+}
+
+['e-brand-name','e-tagline','e-whatsapp','e-about-title','e-about-text'].forEach(id=>{
+    document.getElementById(id).addEventListener('input', e=>{
+        const map = {
+            'e-brand-name': ['brand','name'],
+            'e-tagline': ['brand','tagline'],
+            'e-whatsapp': ['brand','whatsapp'],
+            'e-about-title': ['brand','aboutTitle'],
+            'e-about-text': ['brand','aboutText']
+        };
+        const [k1,k2] = map[id];
+        siteData[k1][k2] = e.target.value;
+        saveData();
+    });
+});
+
+document.getElementById('e-accent').addEventListener('input', e=>{
+    siteData.brand.accent = e.target.value;
+    saveData();
+});
+
+['e-instagram','e-facebook','e-pinterest','e-tiktok','e-walink','e-website'].forEach(id=>{
+    document.getElementById(id).addEventListener('input', e=>{
+        const map = {
+            'e-instagram':'instagram',
+            'e-facebook':'facebook',
+            'e-pinterest':'pinterest',
+            'e-tiktok':'tiktok',
+            'e-walink':'whatsappLink',
+            'e-website':'website'
+        };
+        siteData.socials[map[id]] = e.target.value.trim();
+        saveData();
+    });
+});
+
+function readFileAsDataURL(file, maxKB=2000){
+    return new Promise((resolve, reject)=>{
+        if(file.size > maxKB*1024){
+            reject('Arquivo muito grande. Envie até ~2MB.');
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = ()=> resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
+document.getElementById('e-logo-input').addEventListener('change', async e=>{
+    const f = e.target.files[0];
+    if(!f) return;
+    try{
+        const data = await readFileAsDataURL(f, 2000);
+        siteData.brand.logo = data;
+        saveData();
+        fillEditorFields();
+    }catch(err){ alert(err); }
+    e.target.value='';
+});
+
+function removeLogo(){ siteData.brand.logo = null; saveData(); fillEditorFields(); }
+
+document.getElementById('e-hero-input').addEventListener('change', async e=>{
+    const f = e.target.files[0];
+    if(!f) return;
+    try{
+        const data = await readFileAsDataURL(f, 2500);
+        siteData.brand.heroImage = data;
+        saveData();
+        fillEditorFields();
+    }catch(err){ alert(err); }
+    e.target.value='';
+});
+
+function removeHero(){ siteData.brand.heroImage = null; saveData(); fillEditorFields(); }
+
+function renderEditorLists(){
+    const el = document.getElementById('editor-products-list');
+    el.innerHTML = siteData.products.map((p, idx)=> `
+        <div class="border border-gray-light rounded-xl bg-white p-3">
+            <div class="flex gap-3">
+                <div class="w-16 h-16 rounded-lg bg-[#e8eef5] overflow-hidden shrink-0 relative">
+                    <img src="${escapeHtml(p.image)}" class="w-full h-full object-cover" onerror="this.style.opacity=.35">
+                    <label class="absolute inset-0 cursor-pointer opacity-0 hover:opacity-100 bg-[#1e3a5f]/60 flex items-center justify-center text-white text-[11px] transition">Trocar<input type="file" accept="image/*" class="hidden" onchange="updateProductImage(${idx}, this.files[0])"></label>
+                </div>
+                <div class="flex-1 space-y-2">
+                    <input class="field field-sm" value="${escapeHtml(p.name)}" placeholder="Nome" oninput="siteData.products[${idx}].name=this.value; saveData()">
+                    <div class="flex gap-2">
+                        <input class="field field-sm flex-1" value="${escapeHtml(p.price)}" placeholder="Preço" oninput="siteData.products[${idx}].price=this.value; saveData()">
+                        <button class="text-[11.5px] px-2 py-1 rounded-lg bg-[#e8eef5] text-[#4a5568] hover:bg-[#dce4ed]" onclick="removeProduct(${idx})">Excluir</button>
+                    </div>
+                    <input class="field field-sm" value="${escapeHtml(p.desc||'')}" placeholder="Descrição" oninput="siteData.products[${idx}].desc=this.value; saveData()">
+                </div>
+            </div>
+        </div>
+    `).join('') || `<div class="text-[13px] text-[#6b7280]">Nenhum template ainda.</div>`;
+
+    const sEl = document.getElementById('editor-services-list');
+    sEl.innerHTML = siteData.services.map((s, idx)=> `
+        <div class="border border-gray-light rounded-xl bg-white p-3 space-y-2">
+            <input class="field field-sm" value="${escapeHtml(s.name)}" placeholder="Nome do serviço" oninput="siteData.services[${idx}].name=this.value; saveData()">
+            <input class="field field-sm" value="${escapeHtml(s.price||'')}" placeholder="Preço" oninput="siteData.services[${idx}].price=this.value; saveData()">
+            <textarea rows="2" class="field field-sm" placeholder="Descrição" oninput="siteData.services[${idx}].desc=this.value; saveData()">${escapeHtml(s.desc||'')}</textarea>
+            <div class="text-right"><button class="text-[11.5px] text-[#00d4ff] hover:text-[#0099cc]" onclick="removeService(${idx})">Excluir</button></div>
+        </div>
+    `).join('') || `<div class="text-[13px] text-[#6b7280]">Nenhum serviço ainda.</div>`;
+
+    const gEl = document.getElementById('editor-gallery-grid');
+    gEl.innerHTML = siteData.gallery.map((src, idx)=> `
+        <button class="relative aspect-square rounded-lg overflow-hidden bg-[#e8eef5] group" onclick="removeGalleryImage(${idx})" type="button">
+            <img src="${escapeHtml(src)}" class="w-full h-full object-cover group-hover:opacity-70 transition">
+            <span class="absolute inset-0 flex items-center justify-center text-[11px] text-white opacity-0 group-hover:opacity-100 bg-[#1e3a5f]/60">Remover</span>
+        </button>
+    `).join('');
+}
+
+function addProduct(){
+    siteData.products.unshift({id:'p'+Date.now(), name:'Novo template', price:'0', image:'https://placehold.co/800x900/e8eef5/6b7280?text=Template', desc:''});
+    saveData();
+    renderEditorLists();
+}
+
+function removeProduct(i){ siteData.products.splice(i,1); saveData(); renderEditorLists(); }
+
+async function updateProductImage(idx, file){
+    if(!file) return;
+    try{
+        const data = await readFileAsDataURL(file, 1800);
+        siteData.products[idx].image = data;
+        saveData();
+        renderEditorLists();
+    }catch(e){ alert(e); }
+}
+
+function addService(){
+    siteData.services.push({id:'s'+Date.now(), name:'Novo serviço', price:'', desc:''});
+    saveData();
+    renderEditorLists();
+}
+
+function removeService(i){ siteData.services.splice(i,1); saveData(); renderEditorLists(); }
+
+document.getElementById('e-gallery-input').addEventListener('change', async e=>{
+    const files = Array.from(e.target.files || []);
+    for(const f of files){
+        try{
+            const data = await readFileAsDataURL(f, 1500);
+            siteData.gallery.push(data);
+        }catch(err){ alert(f.name + ': ' + err); }
+    }
+    saveData();
+    renderEditorLists();
+    e.target.value='';
+});
+
+function removeGalleryImage(i){ siteData.gallery.splice(i,1); saveData(); renderEditorLists(); }
+
+function exportSiteData(){
+    const blob = new Blob([JSON.stringify(siteData, null, 2)], {type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = (siteData.brand.name.toLowerCase().replace(/\s+/g,'-') || 'sidmarkting') + '-dados.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+
+document.getElementById('import-input').addEventListener('change', e=>{
+    const f = e.target.files[0];
+    if(!f) return;
+    const reader = new FileReader();
+    reader.onload = ()=>{
+        try{
+            siteData = JSON.parse(reader.result);
+            saveData();
+            fillEditorFields();
+            renderEditorLists();
+            showToast('Importado');
+        }catch(err){ alert('Arquivo inválido'); }
+    };
+    reader.readAsText(f);
+    e.target.value='';
+});
+
+function resetDemo(){
+    if(!confirm('Resetar para dados padrão?')) return;
+    localStorage.removeItem('sidmarkting_site_v1');
+    siteData = JSON.parse(JSON.stringify(DEFAULT_DATA));
+    saveData();
+    fillEditorFields();
+    renderEditorLists();
+}
+
+let toastTimer;
+function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.opacity = '1';
+    t.style.transform = 'translate(-50%, 0)';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>{
+        t.style.opacity='0';
+        t.style.transform='translate(-50%, 8px)';
+    }, 1650);
+}
+
+document.getElementById('mobile-menu-btn').addEventListener('click', ()=>{
+    document.getElementById('mobile-menu').classList.toggle('hidden');
+});
+
+document.querySelectorAll('#mobile-menu a').forEach(a=> a.addEventListener('click', ()=> document.getElementById('mobile-menu').classList.add('hidden')));
+
+document.getElementById('footer-year').textContent = new Date().getFullYear();
+renderAll();
+lucide.createIcons();
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', e=>{
+        const id = a.getAttribute('href');
+        const el = document.querySelector(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+});
+</script>
+</body>
+</html>
