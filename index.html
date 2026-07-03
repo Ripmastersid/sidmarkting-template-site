@@ -60,7 +60,8 @@
             "https://www.instagram.com/syd.shapper/",
             "https://www.facebook.com/share/1HBzgeoByk/",
             "https://pin.it/1C8C2hnnp",
-            "https://www.tiktok.com/@sidneisantosatv"
+            "https://www.tiktok.com/@sidneisantosatv",
+            "https://www.linkedin.com/in/sidnei-santos-3ab92412a/"
         ],
         "hasOfferCatalog": {
             "@type": "OfferCatalog",
@@ -542,6 +543,7 @@
                 <div><label class="label-sm">Facebook</label><input id="e-facebook" class="field field-sm" placeholder="https://facebook.com/..."></div>
                 <div><label class="label-sm">Pinterest</label><input id="e-pinterest" class="field field-sm" placeholder="https://pinterest.com/..."></div>
                 <div><label class="label-sm">TikTok</label><input id="e-tiktok" class="field field-sm" placeholder="https://tiktok.com/@..."></div>
+                <div><label class="label-sm">LinkedIn</label><input id="e-linkedin" class="field field-sm" placeholder="https://linkedin.com/in/..."></div>
                 <div><label class="label-sm">WhatsApp link</label><input id="e-walink" class="field field-sm" placeholder="https://wa.me/5521..."></div>
                 <div><label class="label-sm">Site</label><input id="e-website" class="field field-sm" placeholder="https://..."></div>
             </div>
@@ -608,6 +610,7 @@ const DEFAULT_DATA = {
         facebook: "https://www.facebook.com/share/1HBzgeoByk/",
         pinterest: "https://pin.it/1C8C2hnnp",
         tiktok: "https://www.tiktok.com/@sidneisantosatv",
+        linkedin: "https://www.linkedin.com/in/sidnei-santos-3ab92412a/",
         whatsappLink: "",
         website: ""
     },
@@ -729,11 +732,13 @@ function renderAll(){
         </div>
     `).join('');
 
+    // REDES SOCIAIS - CORREÇÃO
     const socialMap = [
         ['instagram', 'Instagram'],
         ['facebook', 'Facebook'],
         ['tiktok', 'TikTok'],
         ['pinterest', 'Pinterest'],
+        ['linkedin', 'LinkedIn'],
         ['website', 'Site']
     ];
     const socialLinks = socialMap.filter(([k]) => siteData.socials[k]).map(([k,label]) => `<a href="${escapeHtml(siteData.socials[k])}" target="_blank" rel="noopener" class="hover:text-white underline underline-offset-4 decoration-[#2e5a8f]">${label}</a>`).join('<span class="text-[#2e5a8f]">•</span>');
@@ -799,6 +804,7 @@ function fillEditorFields(){
     document.getElementById('e-facebook').value = siteData.socials.facebook || '';
     document.getElementById('e-pinterest').value = siteData.socials.pinterest || '';
     document.getElementById('e-tiktok').value = siteData.socials.tiktok || '';
+    document.getElementById('e-linkedin').value = siteData.socials.linkedin || '';
     document.getElementById('e-walink').value = siteData.socials.whatsappLink || '';
     document.getElementById('e-website').value = siteData.socials.website || '';
     document.getElementById('e-logo-preview').classList.toggle('hidden', !siteData.brand.logo);
@@ -825,13 +831,14 @@ document.getElementById('e-accent').addEventListener('input', e=>{
     saveData();
 });
 
-['e-instagram','e-facebook','e-pinterest','e-tiktok','e-walink','e-website'].forEach(id=>{
+['e-instagram','e-facebook','e-pinterest','e-tiktok','e-linkedin','e-walink','e-website'].forEach(id=>{
     document.getElementById(id).addEventListener('input', e=>{
         const map = {
             'e-instagram':'instagram',
             'e-facebook':'facebook',
             'e-pinterest':'pinterest',
             'e-tiktok':'tiktok',
+            'e-linkedin':'linkedin',
             'e-walink':'whatsappLink',
             'e-website':'website'
         };
@@ -1029,4 +1036,4 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 });
 </script>
 </body>
-</html>
+    </html>
