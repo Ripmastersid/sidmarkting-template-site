@@ -81,7 +81,7 @@
                         'wine-dark': '#2d0a0a',
                         'cyan': '#00d4ff',
                         'cream': '#f5efe7',
-                        'paper': '#f4f6f8', // Ajustado para cinza claro conforme pedido
+                        'paper': '#f4f6f8',
                     }
                 }
             }
@@ -123,8 +123,23 @@
             min-height: 80px;
         }
         .file-drop:hover { border-color: #2e5a8f; background: #dce4ed;}
-        .social-icon { transition: all 0.2s; }
-        .social-icon:hover { transform: translateY(-3px); color: #00d4ff; }
+        
+        /* Ícones redes sociais */
+        .social-icon { 
+            transition: all 0.2s; 
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+        }
+        .social-icon:hover { 
+            transform: translateY(-3px); 
+            background: #00d4ff;
+            color: white;
+        }
         
         /* Editor item card */
         .editor-item {
@@ -133,15 +148,15 @@
         }
         .editor-item:hover { border-color: #cbd5e1; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .remove-btn {
-            position: absolute; top: 10px; right: 10px; width: 24px; height: 24px;
-            background: #fee2e2; color: #ef4444; border-radius: 6px; display: flex;
-            align-items: center; justify-content: center; cursor: pointer;
+            position: absolute; top: 10px; right: 10px; width: 28px; height: 28px;
+            background: #fee2e2; color: #ef4444; border-radius: 8px; display: flex;
+            align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;
         }
-        .remove-btn:hover { background: #fecaca; }
+        .remove-btn:hover { background: #fecaca; transform: scale(1.1); }
         
         /* Image preview mini */
         .img-preview-mini {
-            width: 48px; height: 48px; border-radius: 8px; object-fit: cover; border: 1px solid #e2e8f0;
+            width: 56px; height: 56px; border-radius: 8px; object-fit: cover; border: 1px solid #e2e8f0; background: #fff;
         }
     </style>
 </head>
@@ -206,7 +221,7 @@
             </div>
             <div class="relative">
                 <div class="rounded-[28px] overflow-hidden soft-shadow">
-                    <img src="./hero.jpg" alt="Dashboard profissional Sidmarkting" class="w-full h-auto">
+                    <img id="hero-img-display" src="./hero.jpg" alt="Dashboard profissional Sidmarkting" class="w-full h-auto">
                 </div>
             </div>
         </div>
@@ -312,8 +327,8 @@
             </div>
             <div class="lg:col-span-6 lg:pl-6">
                 <div class="text-[11px] uppercase tracking-widest text-[#b8c5d6] font-bold mb-2">Sobre</div>
-                <h2 class="font-display text-[38px] md:text-[46px] font-bold text-white mb-4">Sidmarkting - Sua marca no digital.</h2>
-                <p class="text-[#e8f1f8] leading-relaxed mb-6">
+                <h2 id="about-title-display" class="font-display text-[38px] md:text-[46px] font-bold text-white mb-4">Sidmarkting - Sua marca no digital.</h2>
+                <p id="about-text-display" class="text-[#e8f1f8] leading-relaxed mb-6">
                     Especialista em criação de templates profissionais e editáveis. Ofereço soluções completas em web design.
                 </p>
                 <div class="flex flex-wrap gap-6 text-[13.5px] text-[#b8c5d6]">
@@ -345,28 +360,23 @@
                 </div>
             </div>
             
-            <!-- REDES SOCIAIS COM ÍCONES -->
+            <!-- REDES SOCIAIS COM ÍCONES VETORIAIS -->
             <div class="mt-10 flex flex-wrap items-center justify-between gap-6">
-                <div class="flex flex-wrap items-center gap-6">
-                    <a href="https://instagram.com/syd.shapper" target="_blank" class="social-icon text-white flex items-center gap-2">
+                <div class="flex flex-wrap items-center gap-4">
+                    <a href="#" target="_blank" class="social-icon text-white" aria-label="Instagram">
                         <i data-lucide="instagram" class="w-5 h-5"></i>
-                        <span class="text-sm">Instagram</span>
                     </a>
-                    <a href="https://facebook.com/share/1HBzgeoByk/" target="_blank" class="social-icon text-white flex items-center gap-2">
+                    <a href="#" target="_blank" class="social-icon text-white" aria-label="Facebook">
                         <i data-lucide="facebook" class="w-5 h-5"></i>
-                        <span class="text-sm">Facebook</span>
                     </a>
-                    <a href="https://tiktok.com/@sidneisantosatv" target="_blank" class="social-icon text-white flex items-center gap-2">
+                    <a href="#" target="_blank" class="social-icon text-white" aria-label="TikTok">
                         <i data-lucide="video" class="w-5 h-5"></i>
-                        <span class="text-sm">TikTok</span>
                     </a>
-                    <a href="https://pin.it/1C8C2hnnp" target="_blank" class="social-icon text-white flex items-center gap-2">
+                    <a href="#" target="_blank" class="social-icon text-white" aria-label="Pinterest">
                         <i data-lucide="pinterest" class="w-5 h-5"></i>
-                        <span class="text-sm">Pinterest</span>
                     </a>
-                    <a href="https://linkedin.com/in/sidnei-santos-3ab92412a" target="_blank" class="social-icon text-white flex items-center gap-2">
+                    <a href="#" target="_blank" class="social-icon text-white" aria-label="LinkedIn">
                         <i data-lucide="linkedin" class="w-5 h-5"></i>
-                        <span class="text-sm">LinkedIn</span>
                     </a>
                 </div>
                 <div class="text-[13.5px] text-[#e8d4d4]">sidnei.santos.marcketing@gmail.com</div>
@@ -407,10 +417,11 @@
                 <button data-tab="redes" class="editor-tab border-b-2 border-transparent text-gray-500 pb-3">Redes</button>
                 <button data-tab="produtos" class="editor-tab border-b-2 border-transparent text-gray-500 pb-3">Templates</button>
                 <button data-tab="servicos" class="editor-tab border-b-2 border-transparent text-gray-500 pb-3">Serviços</button>
+                <button data-tab="galeria" class="editor-tab border-b-2 border-transparent text-gray-500 pb-3">Galeria</button>
             </nav>
         </div>
         
-        <div class="flex-1 overflow-y-auto p-5">
+        <div class="flex-1 overflow-y-auto p-5 editor-scroll">
             <!-- TAB IDENTIDADE -->
             <div class="editor-pane" data-pane="identidade">
                 <div class="space-y-4">
@@ -461,6 +472,17 @@
                     <i data-lucide="plus" class="w-4 h-4"></i> Novo Serviço
                 </button>
             </div>
+
+            <!-- TAB GALERIA -->
+            <div class="editor-pane hidden" data-pane="galeria">
+                <label class="file-drop block px-4 py-6 text-center cursor-pointer mb-4">
+                    <div class="text-[13.5px]"><strong class="text-navy">Enviar fotos para a galeria</strong></div>
+                    <div class="text-[12px] text-[#6b7280] mt-1">Selecione várias de uma vez</div>
+                    <input id="e-gallery-input" type="file" accept="image/*" multiple class="hidden">
+                </label>
+                <div id="editor-gallery-grid" class="grid grid-cols-3 gap-2"></div>
+                <p class="text-[12px] text-[#6b7280] mt-3">Clique em uma foto para remover.</p>
+            </div>
         </div>
         
         <div class="border-t border-gray-200 px-5 py-3.5">
@@ -492,13 +514,11 @@ const DEFAULT_DATA = {
 
 let siteData = JSON.parse(localStorage.getItem('sidmarkting_site_v4')) || JSON.parse(JSON.stringify(DEFAULT_DATA));
 
-// Função para salvar e re-renderizar
 function saveData(){
     localStorage.setItem('sidmarkting_site_v4', JSON.stringify(siteData));
     renderAll();
 }
 
-// Renderiza tudo no site
 function renderAll(){
     // Produtos
     document.getElementById('products-grid').innerHTML = siteData.products.map(p => `
@@ -532,38 +552,33 @@ function renderAll(){
         </div>
     `).join('');
 
-    // Atualiza textos globais
+    // Textos globais
     document.getElementById('brand-initial').textContent = siteData.brand.name.charAt(0).toUpperCase();
     document.querySelector('header .font-display.text-\\[19px\\]').textContent = siteData.brand.name;
     
-    const heroImg = document.querySelector('section:first-of-type img');
-    if (heroImg && siteData.brand.heroImage) {
-        heroImg.src = siteData.brand.heroImage;
-    }
+    const heroImg = document.getElementById('hero-img-display');
+    if (heroImg && siteData.brand.heroImage) heroImg.src = siteData.brand.heroImage;
 
-    // Atualiza sobre
-    document.querySelector('#sobre h2').textContent = siteData.brand.aboutTitle;
-    document.querySelector('#sobre p').textContent = siteData.brand.aboutText;
+    document.getElementById('about-title-display').textContent = siteData.brand.aboutTitle;
+    document.getElementById('about-text-display').textContent = siteData.brand.aboutText;
 
-    // Atualiza WhatsApp links
+    // WhatsApp links
     const waNum = siteData.brand.whatsapp;
-    document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
-        a.href = `https://wa.me/${waNum}`;
-    });
+    document.querySelectorAll('a[href*="wa.me"]').forEach(a => a.href = `https://wa.me/${waNum}`);
 
-    // Atualiza redes sociais
-    document.querySelectorAll('.social-icon').forEach(link => {
-        if(link.querySelector('[data-lucide="instagram"]')) link.href = siteData.socials.instagram;
-        if(link.querySelector('[data-lucide="facebook"]')) link.href = siteData.socials.facebook;
-        if(link.querySelector('[data-lucide="video"]')) link.href = siteData.socials.tiktok;
-        if(link.querySelector('[data-lucide="pinterest"]')) link.href = siteData.socials.pinterest;
-        if(link.querySelector('[data-lucide="linkedin"]')) link.href = siteData.socials.linkedin;
-    });
+    // Redes sociais com ícones
+    const socialIcons = document.querySelectorAll('.social-icon');
+    if(socialIcons.length >= 5) {
+        socialIcons[0].href = siteData.socials.instagram;
+        socialIcons[1].href = siteData.socials.facebook;
+        socialIcons[2].href = siteData.socials.tiktok;
+        socialIcons[3].href = siteData.socials.pinterest;
+        socialIcons[4].href = siteData.socials.linkedin;
+    }
 
     lucide.createIcons();
 }
 
-// Preenche o editor com os dados atuais
 function populateEditor(){
     document.getElementById('e-brand-name').value = siteData.brand.name;
     document.getElementById('e-tagline').value = siteData.brand.tagline;
@@ -573,7 +588,6 @@ function populateEditor(){
     document.getElementById('e-about-text').value = siteData.brand.aboutText;
     document.getElementById('hero-file-name').textContent = siteData.brand.heroImage.includes('data:') ? 'Imagem carregada ✓' : siteData.brand.heroImage.split('/').pop();
 
-    // Redes
     document.getElementById('e-instagram').value = siteData.socials.instagram;
     document.getElementById('e-facebook').value = siteData.socials.facebook;
     document.getElementById('e-tiktok').value = siteData.socials.tiktok;
@@ -582,15 +596,15 @@ function populateEditor(){
 
     renderEditorProducts();
     renderEditorServices();
+    renderEditorGallery();
 }
 
-// Renderiza lista de produtos no editor
 function renderEditorProducts(){
     document.getElementById('editor-products-list').innerHTML = siteData.products.map((p, idx) => `
         <div class="editor-item" data-idx="${idx}">
             <div class="remove-btn" onclick="removeProduct(${idx})"><i data-lucide="trash-2" class="w-4 h-4"></i></div>
             <div class="flex items-center gap-3 mb-3">
-                <img src="${p.image}" class="img-preview-mini" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYWJjZGVmIiBzdHJva2Utd2lkdGg9IjIiPjxyZWN0IHg9IjMiIHk9IjMiIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgcng9IjIiLz48cGF0aCBkPSJNMTQgOWw0LTRtMCAwbC00LDRtNCA0bC00LTRtMCAwbDQgNCIvPjwvc3ZnPg=='">
+                <img src="${p.image}" class="img-preview-mini" onerror="this.style.background='#e2e8f0'">
                 <div class="flex-1"><input type="text" value="${p.name}" oninput="updateProduct(${idx}, 'name', this.value)" class="field-sm font-medium w-full"></div>
             </div>
             <div class="grid grid-cols-2 gap-2 mb-2">
@@ -606,7 +620,6 @@ function renderEditorProducts(){
     lucide.createIcons();
 }
 
-// Renderiza lista de serviços no editor
 function renderEditorServices(){
     document.getElementById('editor-services-list').innerHTML = siteData.services.map((s, idx) => `
         <div class="editor-item" data-idx="${idx}">
@@ -622,12 +635,21 @@ function renderEditorServices(){
     lucide.createIcons();
 }
 
+function renderEditorGallery(){
+    document.getElementById('editor-gallery-grid').innerHTML = siteData.gallery.map((src, idx) => `
+        <button class="relative aspect-square rounded-lg overflow-hidden bg-gray-200 group" onclick="removeGalleryImage(${idx})" type="button">
+            <img src="${src}" class="w-full h-full object-cover group-hover:opacity-70 transition">
+            <span class="absolute inset-0 flex items-center justify-center text-[11px] text-white opacity-0 group-hover:opacity-100 bg-black/50">Remover</span>
+        </button>
+    `).join('');
+}
+
 // Editor open/close
 const editorOverlay = document.getElementById('editor-overlay');
 const editorDrawer = document.getElementById('editor-drawer');
 
 function openEditor(tab='identidade'){
-    populateEditor(); // CARREGA OS DADOS ANTES DE ABRIR
+    populateEditor();
     editorOverlay.classList.remove('hidden');
     setTimeout(()=> editorDrawer.classList.remove('translate-x-full'), 10);
     switchEditorTab(tab);
@@ -657,15 +679,16 @@ function switchEditorTab(name){
     });
 }
 
-// Listeners - Identidade
-document.getElementById('e-brand-name').addEventListener('input', e=>{ siteData.brand.name = e.target.value; saveData(); });
-document.getElementById('e-tagline').addEventListener('input', e=>{ siteData.brand.tagline = e.target.value; saveData(); });
+// Listeners Identidade
+['e-brand-name','e-tagline','e-whatsapp','e-about-title','e-about-text'].forEach(id=>{
+    document.getElementById(id).addEventListener('input', e=>{ 
+        const map = {'e-brand-name':['brand','name'],'e-tagline':['brand','tagline'],'e-whatsapp':['brand','whatsapp'],'e-about-title':['brand','aboutTitle'],'e-about-text':['brand','aboutText']};
+        const [k1,k2] = map[id]; siteData[k1][k2] = e.target.value; saveData(); 
+    });
+});
 document.getElementById('e-accent').addEventListener('input', e=>{ siteData.brand.accent = e.target.value; saveData(); });
-document.getElementById('e-whatsapp').addEventListener('input', e=>{ siteData.brand.whatsapp = e.target.value; saveData(); });
-document.getElementById('e-about-title').addEventListener('input', e=>{ siteData.brand.aboutTitle = e.target.value; saveData(); });
-document.getElementById('e-about-text').addEventListener('input', e=>{ siteData.brand.aboutText = e.target.value; saveData(); });
 
-// Upload de Imagem Hero
+// Upload Hero
 document.getElementById('e-hero-image').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (file) {
@@ -679,19 +702,14 @@ document.getElementById('e-hero-image').addEventListener('change', function(e) {
     }
 });
 
-// Listeners - Redes
+// Listeners Redes
 ['instagram','facebook','tiktok','pinterest','linkedin'].forEach(key=>{
     document.getElementById(`e-${key}`).addEventListener('input', e=>{ siteData.socials[key] = e.target.value; saveData(); });
 });
 
 // CRUD Produtos
-function updateProduct(idx, field, value) {
-    siteData.products[idx][field] = value;
-    saveData();
-}
-function removeProduct(idx) {
-    if(confirm('Remover este template?')) { siteData.products.splice(idx, 1); saveData(); }
-}
+function updateProduct(idx, field, value) { siteData.products[idx][field] = value; saveData(); }
+function removeProduct(idx) { if(confirm('Remover este template?')) { siteData.products.splice(idx, 1); saveData(); } }
 function uploadProductImage(idx, input) {
     const file = input.files[0];
     if(file) {
@@ -706,16 +724,34 @@ function addProduct() {
 }
 
 // CRUD Serviços
-function updateService(idx, field, value) {
-    siteData.services[idx][field] = value;
-    saveData();
-}
-function removeService(idx) {
-    if(confirm('Remover este serviço?')) { siteData.services.splice(idx, 1); saveData(); }
-}
+function updateService(idx, field, value) { siteData.services[idx][field] = value; saveData(); }
+function removeService(idx) { if(confirm('Remover este serviço?')) { siteData.services.splice(idx, 1); saveData(); } }
 function addService() {
     siteData.services.push({id:'s'+Date.now(), name:'Novo serviço', price:'', desc:''});
     saveData(); renderEditorServices();
+}
+
+// CRUD Galeria
+document.getElementById('e-gallery-input').addEventListener('change', async e=>{
+    const files = Array.from(e.target.files || []);
+    for(const f of files){
+        try{
+            const data = await readFileAsDataURL(f, 1500);
+            siteData.gallery.push(data);
+        }catch(err){ alert(f.name + ': ' + err); }
+    }
+    saveData(); renderEditorGallery();
+    e.target.value='';
+});
+function removeGalleryImage(i){ siteData.gallery.splice(i,1); saveData(); renderEditorGallery(); }
+function readFileAsDataURL(file, maxKB=1500){
+    return new Promise((resolve, reject)=>{
+        if(file.size > maxKB*1024){ reject('Arquivo muito grande (~1.5MB).'); return; }
+        const reader = new FileReader();
+        reader.onload = ()=> resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
 }
 
 // Inicialização
