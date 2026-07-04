@@ -134,6 +134,7 @@
             height: 40px;
             border-radius: 50%;
             background: rgba(255,255,255,0.1);
+            color: white;
         }
         .social-icon:hover { 
             transform: translateY(-3px); 
@@ -148,15 +149,30 @@
         }
         .editor-item:hover { border-color: #cbd5e1; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .remove-btn {
-            position: absolute; top: 10px; right: 10px; width: 28px; height: 28px;
+            position: absolute; top: 10px; right: 10px; width: 32px; height: 32px;
             background: #fee2e2; color: #ef4444; border-radius: 8px; display: flex;
             align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;
+            border: none;
         }
         .remove-btn:hover { background: #fecaca; transform: scale(1.1); }
         
         /* Image preview mini */
         .img-preview-mini {
-            width: 56px; height: 56px; border-radius: 8px; object-fit: cover; border: 1px solid #e2e8f0; background: #fff;
+            width: 64px; height: 64px; border-radius: 8px; object-fit: cover; border: 1px solid #e2e8f0; background: #fff;
+        }
+        
+        .upload-btn {
+            background: #e0f2fe;
+            border: 2px dashed #0ea5e9;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .upload-btn:hover {
+            background: #bae6fd;
+            border-color: #0284c7;
         }
     </style>
 </head>
@@ -363,19 +379,19 @@
             <!-- REDES SOCIAIS COM ÍCONES VETORIAIS -->
             <div class="mt-10 flex flex-wrap items-center justify-between gap-6">
                 <div class="flex flex-wrap items-center gap-4">
-                    <a href="#" target="_blank" class="social-icon text-white" aria-label="Instagram">
+                    <a href="#" id="social-instagram" target="_blank" class="social-icon" aria-label="Instagram">
                         <i data-lucide="instagram" class="w-5 h-5"></i>
                     </a>
-                    <a href="#" target="_blank" class="social-icon text-white" aria-label="Facebook">
+                    <a href="#" id="social-facebook" target="_blank" class="social-icon" aria-label="Facebook">
                         <i data-lucide="facebook" class="w-5 h-5"></i>
                     </a>
-                    <a href="#" target="_blank" class="social-icon text-white" aria-label="TikTok">
+                    <a href="#" id="social-tiktok" target="_blank" class="social-icon" aria-label="TikTok">
                         <i data-lucide="video" class="w-5 h-5"></i>
                     </a>
-                    <a href="#" target="_blank" class="social-icon text-white" aria-label="Pinterest">
+                    <a href="#" id="social-pinterest" target="_blank" class="social-icon" aria-label="Pinterest">
                         <i data-lucide="pinterest" class="w-5 h-5"></i>
                     </a>
-                    <a href="#" target="_blank" class="social-icon text-white" aria-label="LinkedIn">
+                    <a href="#" id="social-linkedin" target="_blank" class="social-icon" aria-label="LinkedIn">
                         <i data-lucide="linkedin" class="w-5 h-5"></i>
                     </a>
                 </div>
@@ -434,12 +450,12 @@
                     <div><label class="label-sm">Título Sobre</label><input id="e-about-title" class="field"></div>
                     <div><label class="label-sm">Texto Sobre</label><textarea id="e-about-text" rows="3" class="field"></textarea></div>
                     <div>
-                        <label class="label-sm">Imagem do Hero (Arraste ou Clique)</label>
+                        <label class="label-sm">Imagem do Hero</label>
                         <label class="file-drop w-full h-24">
                             <input type="file" id="e-hero-image" accept="image/*" class="hidden">
                             <div class="text-center text-gray-500 text-sm">
                                 <i data-lucide="upload-cloud" class="w-5 h-5 mx-auto mb-1 text-[#1e3a5f]"></i>
-                                <span id="hero-file-name">Enviar imagem</span>
+                                <span id="hero-file-name">Clique para enviar imagem</span>
                             </div>
                         </label>
                     </div>
@@ -477,7 +493,7 @@
             <div class="editor-pane hidden" data-pane="galeria">
                 <label class="file-drop block px-4 py-6 text-center cursor-pointer mb-4">
                     <div class="text-[13.5px]"><strong class="text-navy">Enviar fotos para a galeria</strong></div>
-                    <div class="text-[12px] text-[#6b7280] mt-1">Selecione várias de uma vez</div>
+                    <div class="text-[12px] text-[#6b7280] mt-1">Máximo 1.5MB por imagem</div>
                     <input id="e-gallery-input" type="file" accept="image/*" multiple class="hidden">
                 </label>
                 <div id="editor-gallery-grid" class="grid grid-cols-3 gap-2"></div>
@@ -566,15 +582,12 @@ function renderAll(){
     const waNum = siteData.brand.whatsapp;
     document.querySelectorAll('a[href*="wa.me"]').forEach(a => a.href = `https://wa.me/${waNum}`);
 
-    // Redes sociais com ícones
-    const socialIcons = document.querySelectorAll('.social-icon');
-    if(socialIcons.length >= 5) {
-        socialIcons[0].href = siteData.socials.instagram;
-        socialIcons[1].href = siteData.socials.facebook;
-        socialIcons[2].href = siteData.socials.tiktok;
-        socialIcons[3].href = siteData.socials.pinterest;
-        socialIcons[4].href = siteData.socials.linkedin;
-    }
+    // Redes sociais - CORREÇÃO AQUI
+    if(siteData.socials.instagram) document.getElementById('social-instagram').href = siteData.socials.instagram;
+    if(siteData.socials.facebook) document.getElementById('social-facebook').href = siteData.socials.facebook;
+    if(siteData.socials.tiktok) document.getElementById('social-tiktok').href = siteData.socials.tiktok;
+    if(siteData.socials.pinterest) document.getElementById('social-pinterest').href = siteData.socials.pinterest;
+    if(siteData.socials.linkedin) document.getElementById('social-linkedin').href = siteData.socials.linkedin;
 
     lucide.createIcons();
 }
@@ -600,18 +613,21 @@ function populateEditor(){
 }
 
 function renderEditorProducts(){
-    document.getElementById('editor-products-list').innerHTML = siteData.products.map((p, idx) => `
+    const container = document.getElementById('editor-products-list');
+    container.innerHTML = siteData.products.map((p, idx) => `
         <div class="editor-item" data-idx="${idx}">
-            <div class="remove-btn" onclick="removeProduct(${idx})"><i data-lucide="trash-2" class="w-4 h-4"></i></div>
+            <button type="button" class="remove-btn" onclick="removeProduct(${idx})" title="Excluir template">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
             <div class="flex items-center gap-3 mb-3">
-                <img src="${p.image}" class="img-preview-mini" onerror="this.style.background='#e2e8f0'">
-                <div class="flex-1"><input type="text" value="${p.name}" oninput="updateProduct(${idx}, 'name', this.value)" class="field-sm font-medium w-full"></div>
+                <img src="${p.image || 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0iI2UyZThmMCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzZiNzI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlbTwvdGV4dD48L3N2Zz4='}" class="img-preview-mini" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0iI2UyZThmMCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzZiNzI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlbTwvdGV4dD48L3N2Zz4='">
+                <div class="flex-1"><input type="text" value="${p.name}" oninput="updateProduct(${idx}, 'name', this.value)" class="field-sm font-medium w-full" placeholder="Nome do template"></div>
             </div>
             <div class="grid grid-cols-2 gap-2 mb-2">
                 <input type="text" value="${p.price}" oninput="updateProduct(${idx}, 'price', this.value)" class="field-sm w-full" placeholder="Preço">
-                <label class="file-drop h-8 px-2 text-xs flex items-center justify-center cursor-pointer">
+                <label class="upload-btn cursor-pointer text-xs">
                     <input type="file" accept="image/*" class="hidden" onchange="uploadProductImage(${idx}, this)">
-                    <i data-lucide="image" class="w-3 h-3 mr-1"></i> Imagem
+                    <i data-lucide="image" class="w-3 h-3 mr-1 inline"></i> Imagem
                 </label>
             </div>
             <input type="text" value="${p.desc}" oninput="updateProduct(${idx}, 'desc', this.value)" class="field-sm w-full" placeholder="Descrição curta">
@@ -621,10 +637,13 @@ function renderEditorProducts(){
 }
 
 function renderEditorServices(){
-    document.getElementById('editor-services-list').innerHTML = siteData.services.map((s, idx) => `
+    const container = document.getElementById('editor-services-list');
+    container.innerHTML = siteData.services.map((s, idx) => `
         <div class="editor-item" data-idx="${idx}">
-            <div class="remove-btn" onclick="removeService(${idx})"><i data-lucide="trash-2" class="w-4 h-4"></i></div>
-            <div class="mb-2"><input type="text" value="${s.name}" oninput="updateService(${idx}, 'name', this.value)" class="field-sm font-medium w-full"></div>
+            <button type="button" class="remove-btn" onclick="removeService(${idx})" title="Excluir serviço">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+            <div class="mb-2"><input type="text" value="${s.name}" oninput="updateService(${idx}, 'name', this.value)" class="field-sm font-medium w-full" placeholder="Nome do serviço"></div>
             <div class="grid grid-cols-2 gap-2 mb-2">
                 <input type="text" value="${s.price}" oninput="updateService(${idx}, 'price', this.value)" class="field-sm w-full" placeholder="Preço">
                 <div class="text-[11px] text-gray-400 flex items-center"><i data-lucide="info" class="w-3 h-3 mr-1"></i> Serviço</div>
@@ -636,8 +655,9 @@ function renderEditorServices(){
 }
 
 function renderEditorGallery(){
-    document.getElementById('editor-gallery-grid').innerHTML = siteData.gallery.map((src, idx) => `
-        <button class="relative aspect-square rounded-lg overflow-hidden bg-gray-200 group" onclick="removeGalleryImage(${idx})" type="button">
+    const container = document.getElementById('editor-gallery-grid');
+    container.innerHTML = siteData.gallery.map((src, idx) => `
+        <button type="button" class="relative aspect-square rounded-lg overflow-hidden bg-gray-200 group" onclick="removeGalleryImage(${idx})">
             <img src="${src}" class="w-full h-full object-cover group-hover:opacity-70 transition">
             <span class="absolute inset-0 flex items-center justify-center text-[11px] text-white opacity-0 group-hover:opacity-100 bg-black/50">Remover</span>
         </button>
@@ -692,10 +712,14 @@ document.getElementById('e-accent').addEventListener('input', e=>{ siteData.bran
 document.getElementById('e-hero-image').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (file) {
+        if(file.size > 2 * 1024 * 1024) {
+            alert('Imagem muito grande. Máximo 2MB.');
+            return;
+        }
         const reader = new FileReader();
         reader.onload = function(evt) {
             siteData.brand.heroImage = evt.target.result;
-            document.getElementById('hero-file-name').textContent = file.name;
+            document.getElementById('hero-file-name').textContent = file.name + ' ✓';
             saveData();
         };
         reader.readAsDataURL(file);
@@ -707,56 +731,141 @@ document.getElementById('e-hero-image').addEventListener('change', function(e) {
     document.getElementById(`e-${key}`).addEventListener('input', e=>{ siteData.socials[key] = e.target.value; saveData(); });
 });
 
-// CRUD Produtos
-function updateProduct(idx, field, value) { siteData.products[idx][field] = value; saveData(); }
-function removeProduct(idx) { if(confirm('Remover este template?')) { siteData.products.splice(idx, 1); saveData(); } }
+// CRUD Produtos - CORREÇÕES AQUI
+function updateProduct(idx, field, value) { 
+    siteData.products[idx][field] = value; 
+    saveData(); 
+}
+
+function removeProduct(idx) { 
+    if(confirm('Deseja excluir este template?')) { 
+        siteData.products.splice(idx, 1); 
+        saveData(); 
+        renderEditorProducts();
+    } 
+}
+
 function uploadProductImage(idx, input) {
     const file = input.files[0];
-    if(file) {
-        const reader = new FileReader();
-        reader.onload = (e) => { siteData.products[idx].image = e.target.result; saveData(); };
-        reader.readAsDataURL(file);
+    if(!file) return;
+    
+    if(file.size > 1.5 * 1024 * 1024) {
+        alert('Imagem muito grande. Máximo 1.5MB. Por favor, comprima a imagem.');
+        input.value = '';
+        return;
     }
+    
+    const reader = new FileReader();
+    reader.onload = function(e) { 
+        siteData.products[idx].image = e.target.result; 
+        saveData();
+        renderEditorProducts();
+    };
+    reader.onerror = function() {
+        alert('Erro ao carregar imagem. Tente novamente.');
+    };
+    reader.readAsDataURL(file);
 }
+
 function addProduct() {
-    siteData.products.push({id:'p'+Date.now(), name:'Novo template', price:'0', image:'', desc:''});
-    saveData(); renderEditorProducts();
+    const newProduct = {
+        id: 'p' + Date.now(), 
+        name: 'Novo Template', 
+        price: '0', 
+        image: '', 
+        desc: ''
+    };
+    siteData.products.push(newProduct);
+    saveData(); 
+    renderEditorProducts();
+    // Scroll para o novo item
+    setTimeout(() => {
+        const items = document.querySelectorAll('.editor-item');
+        if(items.length > 0) {
+            items[items.length - 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }, 100);
 }
 
 // CRUD Serviços
-function updateService(idx, field, value) { siteData.services[idx][field] = value; saveData(); }
-function removeService(idx) { if(confirm('Remover este serviço?')) { siteData.services.splice(idx, 1); saveData(); } }
+function updateService(idx, field, value) { 
+    siteData.services[idx][field] = value; 
+    saveData(); 
+}
+
+function removeService(idx) { 
+    if(confirm('Deseja excluir este serviço?')) { 
+        siteData.services.splice(idx, 1); 
+        saveData();
+        renderEditorServices();
+    } 
+}
+
 function addService() {
-    siteData.services.push({id:'s'+Date.now(), name:'Novo serviço', price:'', desc:''});
-    saveData(); renderEditorServices();
+    const newService = {
+        id: 's' + Date.now(), 
+        name: 'Novo Serviço', 
+        price: '', 
+        desc: ''
+    };
+    siteData.services.push(newService);
+    saveData(); 
+    renderEditorServices();
 }
 
 // CRUD Galeria
 document.getElementById('e-gallery-input').addEventListener('change', async e=>{
     const files = Array.from(e.target.files || []);
+    let uploaded = 0;
+    
     for(const f of files){
+        if(f.size > 1.5 * 1024 * 1024) {
+            alert(`${f.name} é muito grande. Máximo 1.5MB.`);
+            continue;
+        }
         try{
             const data = await readFileAsDataURL(f, 1500);
             siteData.gallery.push(data);
-        }catch(err){ alert(f.name + ': ' + err); }
+            uploaded++;
+        }catch(err){ 
+            alert(f.name + ': ' + err); 
+        }
     }
-    saveData(); renderEditorGallery();
+    
+    if(uploaded > 0) {
+        saveData(); 
+        renderEditorGallery();
+        alert(`${uploaded} imagem(ns) carregada(s) com sucesso!`);
+    }
     e.target.value='';
 });
-function removeGalleryImage(i){ siteData.gallery.splice(i,1); saveData(); renderEditorGallery(); }
+
+function removeGalleryImage(i){ 
+    if(confirm('Remover esta foto da galeria?')) {
+        siteData.gallery.splice(i,1); 
+        saveData(); 
+        renderEditorGallery(); 
+    }
+}
+
 function readFileAsDataURL(file, maxKB=1500){
     return new Promise((resolve, reject)=>{
-        if(file.size > maxKB*1024){ reject('Arquivo muito grande (~1.5MB).'); return; }
+        if(file.size > maxKB*1024){ 
+            reject('Arquivo muito grande. Máximo ~1.5MB.'); 
+            return; 
+        }
         const reader = new FileReader();
         reader.onload = ()=> resolve(reader.result);
-        reader.onerror = reject;
+        reader.onerror = ()=> reject('Erro ao ler arquivo');
         reader.readAsDataURL(file);
     });
 }
 
 // Inicialização
-renderAll();
-lucide.createIcons();
+document.addEventListener('DOMContentLoaded', function() {
+    renderAll();
+    lucide.createIcons();
+});
 </script>
 </body>
 </html>
