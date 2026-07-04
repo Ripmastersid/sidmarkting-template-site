@@ -116,64 +116,8 @@
             border-radius: 14px;
             background: #e8eef5;
             transition: all .15s;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 80px;
         }
         .file-drop:hover { border-color: #2e5a8f; background: #dce4ed;}
-        
-        /* Ícones redes sociais */
-        .social-icon { 
-            transition: all 0.2s; 
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            color: white;
-        }
-        .social-icon:hover { 
-            transform: translateY(-3px); 
-            background: #00d4ff;
-            color: white;
-        }
-        
-        /* Editor item card */
-        .editor-item {
-            background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px;
-            position: relative; transition: all 0.2s;
-        }
-        .editor-item:hover { border-color: #cbd5e1; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .remove-btn {
-            position: absolute; top: 10px; right: 10px; width: 32px; height: 32px;
-            background: #fee2e2; color: #ef4444; border-radius: 8px; display: flex;
-            align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;
-            border: none;
-        }
-        .remove-btn:hover { background: #fecaca; transform: scale(1.1); }
-        
-        /* Image preview mini */
-        .img-preview-mini {
-            width: 64px; height: 64px; border-radius: 8px; object-fit: cover; border: 1px solid #e2e8f0; background: #fff;
-        }
-        
-        .upload-btn {
-            background: #e0f2fe;
-            border: 2px dashed #0ea5e9;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .upload-btn:hover {
-            background: #bae6fd;
-            border-color: #0284c7;
-        }
     </style>
 </head>
 <body class="bg-paper">
@@ -192,11 +136,12 @@
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-xl border-b border-gray-200">
         <div class="max-w-6xl mx-auto px-5 h-[72px] flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-[11px] bg-gradient-to-br from-[#1e3a5f] to-[#00d4ff] flex items-center justify-center text-white font-display font-bold">
+                <div id="brand-logo-box" class="w-9 h-9 rounded-[11px] bg-gradient-to-br from-[#1e3a5f] to-[#00d4ff] flex items-center justify-center text-white font-display font-bold overflow-hidden shrink-0">
                     <span id="brand-initial">S</span>
+                    <img id="brand-logo-img" class="w-full h-full object-cover hidden" alt="Logo">
                 </div>
                 <div>
-                    <div class="font-display text-[19px] font-bold text-[#1e3a5f]">Sidmarkting</div>
+                    <div id="brand-name-display" class="font-display text-[19px] font-bold text-[#1e3a5f]">Sidmarkting</div>
                     <div class="text-[11px] text-gray-500 -mt-1 hidden sm:block">Templates Profissionais</div>
                 </div>
             </div>
@@ -208,7 +153,7 @@
                 <a href="#contato" class="hover:text-[#1e3a5f] transition">Contato</a>
             </nav>
             <div class="flex items-center gap-3">
-                <a href="https://wa.me/5521966053200" target="_blank" class="hidden sm:inline-flex text-[13.5px] text-gray-600 hover:text-[#1e3a5f]">WhatsApp</a>
+                <a id="header-whatsapp" href="#" target="_blank" class="hidden sm:inline-flex text-[13.5px] text-gray-600 hover:text-[#1e3a5f]">WhatsApp</a>
                 <button onclick="openEditor()" class="bg-gradient-to-r from-[#1e3a5f] to-[#00d4ff] text-white px-4 py-2.5 rounded-full text-[13.5px] font-medium hover:shadow-lg transition">
                     Personalizar
                 </button>
@@ -227,7 +172,7 @@
                 <h1 class="font-display text-[48px] sm:text-[64px] lg:text-[76px] leading-[0.93] font-bold text-[#0f1f33]">
                     Templates<br>que vendem<br>por você.
                 </h1>
-                <p class="mt-6 text-[17.5px] leading-relaxed text-gray-600 max-w-[440px]">
+                <p id="hero-tagline" class="mt-6 text-[17.5px] leading-relaxed text-gray-600 max-w-[440px]">
                     Sites profissionais, editáveis e otimizados. Escolha seu template, personalize e coloque no ar em minutos.
                 </p>
                 <div class="mt-8 flex flex-wrap gap-3">
@@ -237,7 +182,7 @@
             </div>
             <div class="relative">
                 <div class="rounded-[28px] overflow-hidden soft-shadow">
-                    <img id="hero-img-display" src="./hero.jpg" alt="Dashboard profissional Sidmarkting" class="w-full h-auto">
+                    <img id="hero-image" src="./hero.jpg" alt="Dashboard profissional Sidmarkting" class="w-full h-auto">
                 </div>
             </div>
         </div>
@@ -343,8 +288,8 @@
             </div>
             <div class="lg:col-span-6 lg:pl-6">
                 <div class="text-[11px] uppercase tracking-widest text-[#b8c5d6] font-bold mb-2">Sobre</div>
-                <h2 id="about-title-display" class="font-display text-[38px] md:text-[46px] font-bold text-white mb-4">Sidmarkting - Sua marca no digital.</h2>
-                <p id="about-text-display" class="text-[#e8f1f8] leading-relaxed mb-6">
+                <h2 id="about-title" class="font-display text-[38px] md:text-[46px] font-bold text-white mb-4">Sidmarkting - Sua marca no digital.</h2>
+                <p id="about-text" class="text-[#e8f1f8] leading-relaxed mb-6">
                     Especialista em criação de templates profissionais e editáveis. Ofereço soluções completas em web design.
                 </p>
                 <div class="flex flex-wrap gap-6 text-[13.5px] text-[#b8c5d6]">
@@ -370,31 +315,15 @@
                     <div class="lg:col-span-5 lg:text-right">
                         <div class="flex flex-wrap lg:justify-end gap-3">
                             <button onclick="openEditor()" class="bg-white text-[#4a0404] px-5 py-3.5 rounded-full text-[14.5px] font-bold hover:bg-[#f5efe7] transition">Personalizar Agora</button>
-                            <a href="https://wa.me/5521966053200" target="_blank" class="border-2 border-[#00d4ff] px-5 py-3.5 rounded-full text-[14.5px] font-medium text-[#00d4ff] hover:bg-[#00d4ff] hover:text-white transition">Falar no WhatsApp</a>
+                            <a id="cta-whatsapp" href="#" target="_blank" class="border-2 border-[#00d4ff] px-5 py-3.5 rounded-full text-[14.5px] font-medium text-[#00d4ff] hover:bg-[#00d4ff] hover:text-white transition">Falar no WhatsApp</a>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- REDES SOCIAIS COM ÍCONES VETORIAIS -->
+            <!-- REDES SOCIAIS EM TEXTO -->
             <div class="mt-10 flex flex-wrap items-center justify-between gap-6">
-                <div class="flex flex-wrap items-center gap-4">
-                    <a href="#" id="social-instagram" target="_blank" class="social-icon" aria-label="Instagram">
-                        <i data-lucide="instagram" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#" id="social-facebook" target="_blank" class="social-icon" aria-label="Facebook">
-                        <i data-lucide="facebook" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#" id="social-tiktok" target="_blank" class="social-icon" aria-label="TikTok">
-                        <i data-lucide="video" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#" id="social-pinterest" target="_blank" class="social-icon" aria-label="Pinterest">
-                        <i data-lucide="pinterest" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#" id="social-linkedin" target="_blank" class="social-icon" aria-label="LinkedIn">
-                        <i data-lucide="linkedin" class="w-5 h-5"></i>
-                    </a>
-                </div>
+                <div class="flex flex-wrap items-center gap-5" id="footer-socials"></div>
                 <div class="text-[13.5px] text-[#e8d4d4]">sidnei.santos.marcketing@gmail.com</div>
             </div>
         </div>
@@ -403,8 +332,8 @@
     <!-- FOOTER - FUNDO CLARO -->
     <footer class="bg-white border-t border-gray-200 py-10 text-center">
         <div class="max-w-6xl mx-auto px-5">
-            <div class="font-display text-[20px] font-bold text-[#1e3a5f] mb-2">Sidmarkting</div>
-            <p class="text-[13px] text-gray-500">© 2026 Sidmarkting. Templates profissionais editáveis.</p>
+            <div id="footer-brand" class="font-display text-[20px] font-bold text-[#1e3a5f] mb-2">Sidmarkting</div>
+            <p class="text-[13px] text-gray-500">© <span id="footer-year"></span> <span class="footer-brand-inline">Sidmarkting</span>. Templates profissionais editáveis.</p>
         </div>
     </footer>
 
@@ -414,7 +343,7 @@
     </button>
 
     <!-- EDITOR DRAWER -->
-    <div id="editor-overlay" class="fixed inset-0 bg-black/45 z-[80] hidden"></div>
+    <div id="editor-overlay" class="fixed inset-0 bg-black/45 z-[80] hidden opacity-0 transition-opacity"></div>
     <aside id="editor-drawer" class="fixed right-0 top-0 h-full w-full sm:w-[460px] bg-white z-[90] shadow-2xl translate-x-full transition-transform duration-300 flex flex-col">
         <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
             <div class="flex items-center gap-2.5">
@@ -429,87 +358,140 @@
         
         <div class="px-5 pt-3 border-b border-gray-200">
             <nav class="flex gap-5 text-[13.5px] font-medium overflow-x-auto">
-                <button data-tab="identidade" class="editor-tab border-b-2 border-[#1e3a5f] text-[#1e3a5f] pb-3">Identidade</button>
-                <button data-tab="redes" class="editor-tab border-b-2 border-transparent text-gray-500 pb-3">Redes</button>
-                <button data-tab="produtos" class="editor-tab border-b-2 border-transparent text-gray-500 pb-3">Templates</button>
-                <button data-tab="servicos" class="editor-tab border-b-2 border-transparent text-gray-500 pb-3">Serviços</button>
-                <button data-tab="galeria" class="editor-tab border-b-2 border-transparent text-gray-500 pb-3">Galeria</button>
+                <button data-tab="identidade" class="editor-tab border-b-2 border-[#1e3a5f] text-[#1e3a5f] pb-3 whitespace-nowrap">Identidade</button>
+                <button data-tab="redes" class="editor-tab border-b-2 border-transparent text-gray-500 pb-3 whitespace-nowrap">Redes</button>
+                <button data-tab="produtos" class="editor-tab border-b-2 border-transparent text-gray-500 pb-3 whitespace-nowrap">Templates</button>
+                <button data-tab="servicos" class="editor-tab border-b-2 border-transparent text-gray-500 pb-3 whitespace-nowrap">Serviços</button>
+                <button data-tab="galeria" class="editor-tab border-b-2 border-transparent text-gray-500 pb-3 whitespace-nowrap">Galeria</button>
             </nav>
         </div>
         
-        <div class="flex-1 overflow-y-auto p-5 editor-scroll">
+        <div class="flex-1 overflow-y-auto editor-scroll">
             <!-- TAB IDENTIDADE -->
-            <div class="editor-pane" data-pane="identidade">
-                <div class="space-y-4">
-                    <div><label class="label-sm">Nome da marca</label><input id="e-brand-name" class="field" placeholder="Ex: Sua Empresa"></div>
-                    <div><label class="label-sm">Slogan</label><textarea id="e-tagline" rows="2" class="field"></textarea></div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div><label class="label-sm">Cor primária</label><input id="e-accent" type="color" value="#1e3a5f" class="field h-[46px] cursor-pointer"></div>
-                        <div><label class="label-sm">WhatsApp</label><input id="e-whatsapp" class="field" placeholder="5521966053200"></div>
-                    </div>
-                    <div><label class="label-sm">Título Sobre</label><input id="e-about-title" class="field"></div>
-                    <div><label class="label-sm">Texto Sobre</label><textarea id="e-about-text" rows="3" class="field"></textarea></div>
+            <div class="editor-pane p-5 space-y-5" data-pane="identidade">
+                <div>
+                    <label class="label-sm">Nome da marca</label>
+                    <input id="e-brand-name" class="field" placeholder="Ex: Sua Empresa">
+                </div>
+                <div>
+                    <label class="label-sm">Slogan</label>
+                    <textarea id="e-tagline" rows="2" class="field"></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="label-sm">Imagem do Hero</label>
-                        <label class="file-drop w-full h-24">
-                            <input type="file" id="e-hero-image" accept="image/*" class="hidden">
-                            <div class="text-center text-gray-500 text-sm">
-                                <i data-lucide="upload-cloud" class="w-5 h-5 mx-auto mb-1 text-[#1e3a5f]"></i>
-                                <span id="hero-file-name">Clique para enviar imagem</span>
-                            </div>
-                        </label>
+                        <label class="label-sm">Cor primária</label>
+                        <input id="e-accent" type="color" value="#1e3a5f" class="field h-[46px] p-1.5 cursor-pointer">
                     </div>
+                    <div>
+                        <label class="label-sm">WhatsApp</label>
+                        <input id="e-whatsapp" class="field" placeholder="5521966053200">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="label-sm">Logo da marca</label>
+                    <label class="file-drop block px-4 py-5 text-center cursor-pointer">
+                        <div class="text-[13.5px] text-gray-600"><strong class="text-[#1e3a5f]">Clique para enviar</strong> ou arraste sua logo</div>
+                        <div class="text-[12px] text-gray-500 mt-1">PNG / JPG / SVG – até 2MB</div>
+                        <input id="e-logo-input" type="file" accept="image/*" class="hidden">
+                    </label>
+                    <div id="e-logo-preview" class="hidden mt-2 text-[12.5px] text-gray-600">Logo carregada ✓ <button type="button" onclick="removeLogo()" class="underline ml-2 text-[#00d4ff]">Remover</button></div>
+                </div>
+
+                <div>
+                    <label class="label-sm">Foto de capa (Hero)</label>
+                    <label class="file-drop block px-4 py-5 text-center cursor-pointer">
+                        <div class="text-[13.5px] text-gray-600"><strong class="text-[#1e3a5f]">Enviar foto de capa</strong></div>
+                        <div class="text-[12px] text-gray-500 mt-1">Recomendado 1400×1000px</div>
+                        <input id="e-hero-input" type="file" accept="image/*" class="hidden">
+                    </label>
+                    <div id="e-hero-preview" class="hidden mt-2 text-[12.5px] text-gray-600">Foto de capa carregada ✓ <button type="button" onclick="removeHero()" class="underline ml-2 text-[#00d4ff]">Remover</button></div>
+                </div>
+
+                <div class="pt-2 border-t border-gray-200">
+                    <label class="label-sm">Título Sobre</label>
+                    <input id="e-about-title" class="field mb-2" placeholder="Título do bloco Sobre">
+                    <label class="label-sm">Texto Sobre</label>
+                    <textarea id="e-about-text" rows="3" class="field" placeholder="Conte um pouco da sua história..."></textarea>
                 </div>
             </div>
             
             <!-- TAB REDES -->
-            <div class="editor-pane hidden" data-pane="redes">
-                <div class="space-y-3">
-                    <div><label class="label-sm">Instagram</label><input id="e-instagram" class="field field-sm" placeholder="https://instagram.com/..."></div>
-                    <div><label class="label-sm">Facebook</label><input id="e-facebook" class="field field-sm" placeholder="https://facebook.com/..."></div>
-                    <div><label class="label-sm">TikTok</label><input id="e-tiktok" class="field field-sm" placeholder="https://tiktok.com/@..."></div>
-                    <div><label class="label-sm">Pinterest</label><input id="e-pinterest" class="field field-sm" placeholder="https://pinterest.com/..."></div>
-                    <div><label class="label-sm">LinkedIn</label><input id="e-linkedin" class="field field-sm" placeholder="https://linkedin.com/in/..."></div>
-                </div>
+            <div class="editor-pane p-5 space-y-4 hidden" data-pane="redes">
+                <p class="text-[13.6px] text-gray-600">Cole os links completos. Campos vazios não aparecem no site.</p>
+                <div><label class="label-sm">Instagram</label><input id="e-instagram" class="field field-sm" placeholder="https://instagram.com/..."></div>
+                <div><label class="label-sm">Facebook</label><input id="e-facebook" class="field field-sm" placeholder="https://facebook.com/..."></div>
+                <div><label class="label-sm">TikTok</label><input id="e-tiktok" class="field field-sm" placeholder="https://tiktok.com/@..."></div>
+                <div><label class="label-sm">Pinterest</label><input id="e-pinterest" class="field field-sm" placeholder="https://pinterest.com/..."></div>
+                <div><label class="label-sm">LinkedIn</label><input id="e-linkedin" class="field field-sm" placeholder="https://linkedin.com/in/..."></div>
             </div>
             
             <!-- TAB PRODUTOS -->
-            <div class="editor-pane hidden" data-pane="produtos">
+            <div class="editor-pane p-5 hidden" data-pane="produtos">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-[13px] text-gray-600">Seus templates</div>
+                    <button onclick="addProduct()" class="text-[12.5px] bg-[#1e3a5f] text-white px-3 py-1.5 rounded-full">+ Novo Template</button>
+                </div>
                 <div id="editor-products-list" class="space-y-3"></div>
-                <button onclick="addProduct()" class="mt-3 w-full bg-[#1e3a5f] text-white px-3 py-2.5 rounded-xl text-sm font-medium hover:bg-[#162b4a] transition flex items-center justify-center gap-2">
-                    <i data-lucide="plus" class="w-4 h-4"></i> Novo Template
-                </button>
+                <div class="mt-3 text-[12px] text-gray-500">Você pode subir a foto de cada template. Se não enviar, uso uma imagem ilustrativa.</div>
             </div>
             
             <!-- TAB SERVIÇOS -->
-            <div class="editor-pane hidden" data-pane="servicos">
+            <div class="editor-pane p-5 hidden" data-pane="servicos">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="text-[13px] text-gray-600">Seus serviços</div>
+                    <button onclick="addService()" class="text-[12.5px] bg-[#1e3a5f] text-white px-3 py-1.5 rounded-full">+ Novo Serviço</button>
+                </div>
                 <div id="editor-services-list" class="space-y-3"></div>
-                <button onclick="addService()" class="mt-3 w-full bg-[#1e3a5f] text-white px-3 py-2.5 rounded-xl text-sm font-medium hover:bg-[#162b4a] transition flex items-center justify-center gap-2">
-                    <i data-lucide="plus" class="w-4 h-4"></i> Novo Serviço
-                </button>
             </div>
 
             <!-- TAB GALERIA -->
-            <div class="editor-pane hidden" data-pane="galeria">
+            <div class="editor-pane p-5 hidden" data-pane="galeria">
                 <label class="file-drop block px-4 py-6 text-center cursor-pointer mb-4">
-                    <div class="text-[13.5px]"><strong class="text-navy">Enviar fotos para a galeria</strong></div>
-                    <div class="text-[12px] text-[#6b7280] mt-1">Máximo 1.5MB por imagem</div>
+                    <div class="text-[13.5px]"><strong class="text-[#1e3a5f]">Enviar fotos para a galeria</strong></div>
+                    <div class="text-[12px] text-gray-500 mt-1">Você pode selecionar várias de uma vez (até 3MB cada)</div>
                     <input id="e-gallery-input" type="file" accept="image/*" multiple class="hidden">
                 </label>
                 <div id="editor-gallery-grid" class="grid grid-cols-3 gap-2"></div>
-                <p class="text-[12px] text-[#6b7280] mt-3">Clique em uma foto para remover.</p>
+                <p class="text-[12px] text-gray-500 mt-3">Clique em uma foto para remover.</p>
             </div>
         </div>
         
-        <div class="border-t border-gray-200 px-5 py-3.5">
-            <button onclick="closeEditor()" class="w-full bg-gradient-to-r from-[#1e3a5f] to-[#00d4ff] text-white py-2.5 rounded-lg font-medium hover:shadow-lg transition">Concluir e Salvar</button>
+        <div class="border-t border-gray-200 bg-gray-50 px-5 py-3.5">
+            <div class="flex flex-wrap gap-2 text-[12.8px]">
+                <button onclick="exportSiteData()" class="px-3 py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-100">Exportar dados</button>
+                <label class="px-3 py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-100 cursor-pointer">Importar
+                    <input type="file" accept=".json" id="import-input" class="hidden">
+                </label>
+                <button onclick="resetDemo()" class="px-3 py-2 rounded-lg text-gray-500 hover:text-[#1e3a5f]">Resetar demo</button>
+                <div class="flex-1"></div>
+                <button onclick="closeEditor()" class="px-4 py-2 rounded-lg bg-gradient-to-r from-[#1e3a5f] to-[#00d4ff] text-white font-500">Concluir</button>
+            </div>
         </div>
     </aside>
 
+    <!-- TOAST -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#1e3a5f] text-white text-[13.5px] px-4 py-2.5 rounded-full shadow-xl z-[200] opacity-0 pointer-events-none transition-all duration-300">Salvo!</div>
+
 <script>
 const DEFAULT_DATA = {
-    brand: { name: "Sidmarkting", tagline: "Templates profissionais que vendem por você.", accent: "#1e3a5f", whatsapp: "5521966053200", aboutTitle: "Sidmarkting - Sua marca no digital.", aboutText: "Especialista em criação de templates profissionais e editáveis. Ofereço soluções completas em web design.", heroImage: "./hero.jpg" },
-    socials: { instagram: "https://www.instagram.com/syd.shapper/", facebook: "https://www.facebook.com/share/1HBzgeoByk/", tiktok: "https://www.tiktok.com/@sidneisantosatv", pinterest: "https://pin.it/1C8C2hnnp", linkedin: "https://www.linkedin.com/in/sidnei-santos-3ab92412a/" },
+    brand: {
+        name: "Sidmarkting",
+        tagline: "Templates profissionais que vendem por você.",
+        logo: null,
+        heroImage: null,
+        accent: "#1e3a5f",
+        whatsapp: "5521966053200",
+        aboutTitle: "Sidmarkting - Sua marca no digital.",
+        aboutText: "Especialista em criação de templates profissionais e editáveis. Ofereço soluções completas em web design."
+    },
+    socials: {
+        instagram: "https://www.instagram.com/syd.shapper/",
+        facebook: "https://www.facebook.com/share/1HBzgeoByk/",
+        tiktok: "https://www.tiktok.com/@sidneisantosatv",
+        pinterest: "https://pin.it/1C8C2hnnp",
+        linkedin: "https://www.linkedin.com/in/sidnei-santos-3ab92412a/"
+    },
     products: [
         {id: "p1", name: "Template Ateliê", price: "1.500", image: "https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&w=800&q=80", desc: "Perfeito para artesãos."},
         {id: "p2", name: "Template Restaurante", price: "1.800", image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80", desc: "Cardápio online e delivery."},
@@ -528,343 +510,392 @@ const DEFAULT_DATA = {
     ]
 };
 
-let siteData = JSON.parse(localStorage.getItem('sidmarkting_site_v4')) || JSON.parse(JSON.stringify(DEFAULT_DATA));
+let siteData = loadData();
+
+function loadData(){
+    try {
+        const raw = localStorage.getItem('sidmarkting_site_v5');
+        if(raw) return JSON.parse(raw);
+    } catch(e){}
+    return JSON.parse(JSON.stringify(DEFAULT_DATA));
+}
 
 function saveData(){
-    localStorage.setItem('sidmarkting_site_v4', JSON.stringify(siteData));
+    localStorage.setItem('sidmarkting_site_v5', JSON.stringify(siteData));
     renderAll();
+    showToast('Salvo');
 }
 
 function renderAll(){
-    // Produtos
-    document.getElementById('products-grid').innerHTML = siteData.products.map(p => `
-        <article class="product-card">
+    // Brand
+    document.getElementById('brand-name-display').textContent = siteData.brand.name;
+    document.getElementById('footer-brand').textContent = siteData.brand.name;
+    document.querySelectorAll('.footer-brand-inline').forEach(el => el.textContent = siteData.brand.name);
+    document.getElementById('hero-tagline').textContent = siteData.brand.tagline;
+    document.getElementById('about-title').textContent = siteData.brand.aboutTitle;
+    document.getElementById('about-text').textContent = siteData.brand.aboutText;
+    document.title = siteData.brand.name + " — Templates Profissionais";
+
+    // Logo
+    const logoImg = document.getElementById('brand-logo-img');
+    const logoInitial = document.getElementById('brand-initial');
+    if(siteData.brand.logo){
+        logoImg.src = siteData.brand.logo;
+        logoImg.classList.remove('hidden');
+        logoInitial.classList.add('hidden');
+    } else {
+        logoImg.classList.add('hidden');
+        logoInitial.classList.remove('hidden');
+        logoInitial.textContent = (siteData.brand.name || 'S').trim().charAt(0).toUpperCase();
+    }
+
+    // Hero image
+    if(siteData.brand.heroImage){
+        document.getElementById('hero-image').src = siteData.brand.heroImage;
+    }
+
+    // WhatsApp
+    const waNum = siteData.brand.whatsapp.replace(/\D/g,'');
+    const waUrl = `https://wa.me/${waNum}?text=${encodeURIComponent('Olá! Vim pelo site e gostaria de mais informações.')}`;
+    document.getElementById('header-whatsapp').href = waUrl;
+    document.getElementById('cta-whatsapp').href = waUrl;
+
+    // Products
+    const grid = document.getElementById('products-grid');
+    grid.innerHTML = siteData.products.map(p => `
+        <article class="product-card group">
             <div class="bg-gray-100 rounded-[20px] overflow-hidden aspect-[4/4.6] relative">
-                <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover" loading="lazy">
+                <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/800x900/e8eef5/6b7280?text=Template'">
             </div>
             <div class="pt-4">
                 <div class="flex items-start justify-between gap-3">
-                    <h3 class="font-display text-[22px] font-bold text-[#0f1f33]">${p.name}</h3>
-                    <div class="text-[15px] text-gray-600">R$ ${p.price}</div>
+                    <h3 class="font-display text-[22px] font-bold text-[#0f1f33]">${escapeHtml(p.name)}</h3>
+                    <div class="text-[15px] text-gray-600">R$ ${escapeHtml(p.price)}</div>
                 </div>
-                <p class="text-[13.7px] text-gray-500 mt-1">${p.desc}</p>
+                <p class="text-[13.7px] text-gray-500 mt-1">${escapeHtml(p.desc || '')}</p>
             </div>
         </article>
-    `).join('');
+    `).join('') || `<div class="col-span-full text-gray-500">Nenhum template ainda.</div>`;
 
-    // Serviços
-    document.getElementById('services-list').innerHTML = siteData.services.map(s => `
+    // Services
+    const sList = document.getElementById('services-list');
+    sList.innerHTML = siteData.services.map(s => `
         <div class="py-7">
-            <div class="font-display text-[24px] font-bold text-white mb-2">${s.name}</div>
-            <div class="text-[#e8d4d4]">${s.desc}</div>
-            <div class="text-[14.5px] text-[#00d4ff] mt-2 font-medium">${s.price}</div>
+            <div class="font-display text-[24px] font-bold text-white mb-2">${escapeHtml(s.name)}</div>
+            <div class="text-[#e8d4d4]">${escapeHtml(s.desc || '')}</div>
+            <div class="text-[14.5px] text-[#00d4ff] mt-2 font-medium">${escapeHtml(s.price || '')}</div>
         </div>
-    `).join('');
+    `).join('') || `<div class="py-6 text-gray-500">Nenhum serviço.</div>`;
 
-    // Galeria
-    document.getElementById('gallery-grid').innerHTML = siteData.gallery.map((src, i) => `
+    // Gallery
+    const gGrid = document.getElementById('gallery-grid');
+    const galleryImages = siteData.gallery.length ? siteData.gallery : [];
+    gGrid.innerHTML = galleryImages.map((src, i) => `
         <div class="rounded-[18px] overflow-hidden bg-gray-200 aspect-square ${i===0 ? 'md:col-span-2 md:row-span-2' : ''}">
-            <img src="${src}" class="w-full h-full object-cover" loading="lazy">
+            <img src="${escapeHtml(src)}" class="w-full h-full object-cover" loading="lazy">
         </div>
     `).join('');
 
-    // Textos globais
-    document.getElementById('brand-initial').textContent = siteData.brand.name.charAt(0).toUpperCase();
-    document.querySelector('header .font-display.text-\\[19px\\]').textContent = siteData.brand.name;
-    
-    const heroImg = document.getElementById('hero-img-display');
-    if (heroImg && siteData.brand.heroImage) heroImg.src = siteData.brand.heroImage;
-
-    document.getElementById('about-title-display').textContent = siteData.brand.aboutTitle;
-    document.getElementById('about-text-display').textContent = siteData.brand.aboutText;
-
-    // WhatsApp links
-    const waNum = siteData.brand.whatsapp;
-    document.querySelectorAll('a[href*="wa.me"]').forEach(a => a.href = `https://wa.me/${waNum}`);
-
-    // Redes sociais - CORREÇÃO AQUI
-    if(siteData.socials.instagram) document.getElementById('social-instagram').href = siteData.socials.instagram;
-    if(siteData.socials.facebook) document.getElementById('social-facebook').href = siteData.socials.facebook;
-    if(siteData.socials.tiktok) document.getElementById('social-tiktok').href = siteData.socials.tiktok;
-    if(siteData.socials.pinterest) document.getElementById('social-pinterest').href = siteData.socials.pinterest;
-    if(siteData.socials.linkedin) document.getElementById('social-linkedin').href = siteData.socials.linkedin;
+    // Footer socials
+    const socialMap = [
+        ['instagram', 'Instagram'],
+        ['facebook', 'Facebook'],
+        ['tiktok', 'TikTok'],
+        ['pinterest', 'Pinterest'],
+        ['linkedin', 'LinkedIn']
+    ];
+    const socialLinks = socialMap.filter(([k]) => siteData.socials[k]).map(([k,label]) => `<a href="${escapeHtml(siteData.socials[k])}" target="_blank" rel="noopener" class="text-white hover:text-[#00d4ff] underline underline-offset-4">${label}</a>`).join('<span class="text-gray-400">•</span>');
+    document.getElementById('footer-socials').innerHTML = socialLinks || `<span class="text-gray-400">Adicione seus links.</span>`;
 
     lucide.createIcons();
 }
 
-function populateEditor(){
-    document.getElementById('e-brand-name').value = siteData.brand.name;
-    document.getElementById('e-tagline').value = siteData.brand.tagline;
-    document.getElementById('e-accent').value = siteData.brand.accent;
-    document.getElementById('e-whatsapp').value = siteData.brand.whatsapp;
-    document.getElementById('e-about-title').value = siteData.brand.aboutTitle;
-    document.getElementById('e-about-text').value = siteData.brand.aboutText;
-    document.getElementById('hero-file-name').textContent = siteData.brand.heroImage.includes('data:') ? 'Imagem carregada ✓' : siteData.brand.heroImage.split('/').pop();
-
-    document.getElementById('e-instagram').value = siteData.socials.instagram;
-    document.getElementById('e-facebook').value = siteData.socials.facebook;
-    document.getElementById('e-tiktok').value = siteData.socials.tiktok;
-    document.getElementById('e-pinterest').value = siteData.socials.pinterest;
-    document.getElementById('e-linkedin').value = siteData.socials.linkedin;
-
-    renderEditorProducts();
-    renderEditorServices();
-    renderEditorGallery();
+function escapeHtml(str){
+    return String(str || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
 
-function renderEditorProducts(){
-    const container = document.getElementById('editor-products-list');
-    container.innerHTML = siteData.products.map((p, idx) => `
-        <div class="editor-item" data-idx="${idx}">
-            <button type="button" class="remove-btn" onclick="removeProduct(${idx})" title="Excluir template">
-                <i data-lucide="trash-2" class="w-4 h-4"></i>
-            </button>
-            <div class="flex items-center gap-3 mb-3">
-                <img src="${p.image || 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0iI2UyZThmMCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzZiNzI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlbTwvdGV4dD48L3N2Zz4='}" class="img-preview-mini" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0iI2UyZThmMCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzZiNzI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlbTwvdGV4dD48L3N2Zz4='">
-                <div class="flex-1"><input type="text" value="${p.name}" oninput="updateProduct(${idx}, 'name', this.value)" class="field-sm font-medium w-full" placeholder="Nome do template"></div>
-            </div>
-            <div class="grid grid-cols-2 gap-2 mb-2">
-                <input type="text" value="${p.price}" oninput="updateProduct(${idx}, 'price', this.value)" class="field-sm w-full" placeholder="Preço">
-                <label class="upload-btn cursor-pointer text-xs">
-                    <input type="file" accept="image/*" class="hidden" onchange="uploadProductImage(${idx}, this)">
-                    <i data-lucide="image" class="w-3 h-3 mr-1 inline"></i> Imagem
-                </label>
-            </div>
-            <input type="text" value="${p.desc}" oninput="updateProduct(${idx}, 'desc', this.value)" class="field-sm w-full" placeholder="Descrição curta">
-        </div>
-    `).join('');
-    lucide.createIcons();
-}
-
-function renderEditorServices(){
-    const container = document.getElementById('editor-services-list');
-    container.innerHTML = siteData.services.map((s, idx) => `
-        <div class="editor-item" data-idx="${idx}">
-            <button type="button" class="remove-btn" onclick="removeService(${idx})" title="Excluir serviço">
-                <i data-lucide="trash-2" class="w-4 h-4"></i>
-            </button>
-            <div class="mb-2"><input type="text" value="${s.name}" oninput="updateService(${idx}, 'name', this.value)" class="field-sm font-medium w-full" placeholder="Nome do serviço"></div>
-            <div class="grid grid-cols-2 gap-2 mb-2">
-                <input type="text" value="${s.price}" oninput="updateService(${idx}, 'price', this.value)" class="field-sm w-full" placeholder="Preço">
-                <div class="text-[11px] text-gray-400 flex items-center"><i data-lucide="info" class="w-3 h-3 mr-1"></i> Serviço</div>
-            </div>
-            <textarea oninput="updateService(${idx}, 'desc', this.value)" class="field-sm w-full" rows="2" placeholder="Descrição">${s.desc}</textarea>
-        </div>
-    `).join('');
-    lucide.createIcons();
-}
-
-function renderEditorGallery(){
-    const container = document.getElementById('editor-gallery-grid');
-    container.innerHTML = siteData.gallery.map((src, idx) => `
-        <button type="button" class="relative aspect-square rounded-lg overflow-hidden bg-gray-200 group" onclick="removeGalleryImage(${idx})">
-            <img src="${src}" class="w-full h-full object-cover group-hover:opacity-70 transition">
-            <span class="absolute inset-0 flex items-center justify-center text-[11px] text-white opacity-0 group-hover:opacity-100 bg-black/50">Remover</span>
-        </button>
-    `).join('');
-}
-
-// Editor open/close
+// Editor functions
 const editorOverlay = document.getElementById('editor-overlay');
 const editorDrawer = document.getElementById('editor-drawer');
 
 function openEditor(tab='identidade'){
-    populateEditor();
     editorOverlay.classList.remove('hidden');
-    setTimeout(()=> editorDrawer.classList.remove('translate-x-full'), 10);
+    requestAnimationFrame(()=>{
+        editorOverlay.classList.remove('opacity-0');
+        editorDrawer.classList.remove('translate-x-full');
+    });
     switchEditorTab(tab);
+    fillEditorFields();
+    renderEditorLists();
     document.body.style.overflow='hidden';
 }
 
 function closeEditor(){
+    editorOverlay.classList.add('opacity-0');
     editorDrawer.classList.add('translate-x-full');
-    setTimeout(()=> editorOverlay.classList.add('hidden'), 300);
+    setTimeout(()=> editorOverlay.classList.add('hidden'), 220);
     document.body.style.overflow='';
 }
 
 editorOverlay.addEventListener('click', closeEditor);
+
 document.querySelectorAll('.editor-tab').forEach(btn=>{
     btn.addEventListener('click', ()=> switchEditorTab(btn.dataset.tab));
 });
 
 function switchEditorTab(name){
     document.querySelectorAll('.editor-tab').forEach(b=>{
-        b.classList.toggle('border-[#1e3a5f]', b.dataset.tab === name);
-        b.classList.toggle('text-[#1e3a5f]', b.dataset.tab === name);
-        b.classList.toggle('border-transparent', b.dataset.tab !== name);
-        b.classList.toggle('text-gray-500', b.dataset.tab !== name);
+        const active = b.dataset.tab === name;
+        b.classList.toggle('border-[#1e3a5f]', active);
+        b.classList.toggle('text-[#1e3a5f]', active);
+        b.classList.toggle('border-transparent', !active);
+        b.classList.toggle('text-gray-500', !active);
     });
     document.querySelectorAll('.editor-pane').forEach(p=>{
         p.classList.toggle('hidden', p.dataset.pane !== name);
     });
 }
 
-// Listeners Identidade
+function fillEditorFields(){
+    document.getElementById('e-brand-name').value = siteData.brand.name;
+    document.getElementById('e-tagline').value = siteData.brand.tagline;
+    document.getElementById('e-accent').value = siteData.brand.accent;
+    document.getElementById('e-whatsapp').value = siteData.brand.whatsapp;
+    document.getElementById('e-about-title').value = siteData.brand.aboutTitle;
+    document.getElementById('e-about-text').value = siteData.brand.aboutText;
+    document.getElementById('e-instagram').value = siteData.socials.instagram || '';
+    document.getElementById('e-facebook').value = siteData.socials.facebook || '';
+    document.getElementById('e-tiktok').value = siteData.socials.tiktok || '';
+    document.getElementById('e-pinterest').value = siteData.socials.pinterest || '';
+    document.getElementById('e-linkedin').value = siteData.socials.linkedin || '';
+    document.getElementById('e-logo-preview').classList.toggle('hidden', !siteData.brand.logo);
+    document.getElementById('e-hero-preview').classList.toggle('hidden', !siteData.brand.heroImage);
+}
+
+// Bind identity fields
 ['e-brand-name','e-tagline','e-whatsapp','e-about-title','e-about-text'].forEach(id=>{
-    document.getElementById(id).addEventListener('input', e=>{ 
-        const map = {'e-brand-name':['brand','name'],'e-tagline':['brand','tagline'],'e-whatsapp':['brand','whatsapp'],'e-about-title':['brand','aboutTitle'],'e-about-text':['brand','aboutText']};
-        const [k1,k2] = map[id]; siteData[k1][k2] = e.target.value; saveData(); 
+    document.getElementById(id).addEventListener('input', e=>{
+        const map = {
+            'e-brand-name': ['brand','name'],
+            'e-tagline': ['brand','tagline'],
+            'e-whatsapp': ['brand','whatsapp'],
+            'e-about-title': ['brand','aboutTitle'],
+            'e-about-text': ['brand','aboutText']
+        };
+        const [k1,k2] = map[id];
+        siteData[k1][k2] = e.target.value;
+        saveData();
     });
 });
-document.getElementById('e-accent').addEventListener('input', e=>{ siteData.brand.accent = e.target.value; saveData(); });
 
-// Upload Hero
-document.getElementById('e-hero-image').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file) {
-        if(file.size > 2 * 1024 * 1024) {
-            alert('Imagem muito grande. Máximo 2MB.');
+document.getElementById('e-accent').addEventListener('input', e=>{
+    siteData.brand.accent = e.target.value;
+    saveData();
+});
+
+// Socials
+['e-instagram','e-facebook','e-tiktok','e-pinterest','e-linkedin'].forEach(id=>{
+    document.getElementById(id).addEventListener('input', e=>{
+        const map = {
+            'e-instagram':'instagram',
+            'e-facebook':'facebook',
+            'e-tiktok':'tiktok',
+            'e-pinterest':'pinterest',
+            'e-linkedin':'linkedin'
+        };
+        siteData.socials[map[id]] = e.target.value.trim();
+        saveData();
+    });
+});
+
+// Image uploads
+function readFileAsDataURL(file, maxKB=3000){
+    return new Promise((resolve, reject)=>{
+        if(file.size > maxKB*1024){
+            reject('Arquivo muito grande. Envie até ~3MB.');
             return;
         }
         const reader = new FileReader();
-        reader.onload = function(evt) {
-            siteData.brand.heroImage = evt.target.result;
-            document.getElementById('hero-file-name').textContent = file.name + ' ✓';
-            saveData();
-        };
-        reader.readAsDataURL(file);
-    }
-});
-
-// Listeners Redes
-['instagram','facebook','tiktok','pinterest','linkedin'].forEach(key=>{
-    document.getElementById(`e-${key}`).addEventListener('input', e=>{ siteData.socials[key] = e.target.value; saveData(); });
-});
-
-// CRUD Produtos - CORREÇÕES AQUI
-function updateProduct(idx, field, value) { 
-    siteData.products[idx][field] = value; 
-    saveData(); 
-}
-
-function removeProduct(idx) { 
-    if(confirm('Deseja excluir este template?')) { 
-        siteData.products.splice(idx, 1); 
-        saveData(); 
-        renderEditorProducts();
-    } 
-}
-
-function uploadProductImage(idx, input) {
-    const file = input.files[0];
-    if(!file) return;
-    
-    if(file.size > 1.5 * 1024 * 1024) {
-        alert('Imagem muito grande. Máximo 1.5MB. Por favor, comprima a imagem.');
-        input.value = '';
-        return;
-    }
-    
-    const reader = new FileReader();
-    reader.onload = function(e) { 
-        siteData.products[idx].image = e.target.result; 
-        saveData();
-        renderEditorProducts();
-    };
-    reader.onerror = function() {
-        alert('Erro ao carregar imagem. Tente novamente.');
-    };
-    reader.readAsDataURL(file);
-}
-
-function addProduct() {
-    const newProduct = {
-        id: 'p' + Date.now(), 
-        name: 'Novo Template', 
-        price: '0', 
-        image: '', 
-        desc: ''
-    };
-    siteData.products.push(newProduct);
-    saveData(); 
-    renderEditorProducts();
-    // Scroll para o novo item
-    setTimeout(() => {
-        const items = document.querySelectorAll('.editor-item');
-        if(items.length > 0) {
-            items[items.length - 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    }, 100);
-}
-
-// CRUD Serviços
-function updateService(idx, field, value) { 
-    siteData.services[idx][field] = value; 
-    saveData(); 
-}
-
-function removeService(idx) { 
-    if(confirm('Deseja excluir este serviço?')) { 
-        siteData.services.splice(idx, 1); 
-        saveData();
-        renderEditorServices();
-    } 
-}
-
-function addService() {
-    const newService = {
-        id: 's' + Date.now(), 
-        name: 'Novo Serviço', 
-        price: '', 
-        desc: ''
-    };
-    siteData.services.push(newService);
-    saveData(); 
-    renderEditorServices();
-}
-
-// CRUD Galeria
-document.getElementById('e-gallery-input').addEventListener('change', async e=>{
-    const files = Array.from(e.target.files || []);
-    let uploaded = 0;
-    
-    for(const f of files){
-        if(f.size > 1.5 * 1024 * 1024) {
-            alert(`${f.name} é muito grande. Máximo 1.5MB.`);
-            continue;
-        }
-        try{
-            const data = await readFileAsDataURL(f, 1500);
-            siteData.gallery.push(data);
-            uploaded++;
-        }catch(err){ 
-            alert(f.name + ': ' + err); 
-        }
-    }
-    
-    if(uploaded > 0) {
-        saveData(); 
-        renderEditorGallery();
-        alert(`${uploaded} imagem(ns) carregada(s) com sucesso!`);
-    }
-    e.target.value='';
-});
-
-function removeGalleryImage(i){ 
-    if(confirm('Remover esta foto da galeria?')) {
-        siteData.gallery.splice(i,1); 
-        saveData(); 
-        renderEditorGallery(); 
-    }
-}
-
-function readFileAsDataURL(file, maxKB=1500){
-    return new Promise((resolve, reject)=>{
-        if(file.size > maxKB*1024){ 
-            reject('Arquivo muito grande. Máximo ~1.5MB.'); 
-            return; 
-        }
-        const reader = new FileReader();
         reader.onload = ()=> resolve(reader.result);
-        reader.onerror = ()=> reject('Erro ao ler arquivo');
+        reader.onerror = reject;
         reader.readAsDataURL(file);
     });
 }
 
-// Inicialização
-document.addEventListener('DOMContentLoaded', function() {
-    renderAll();
-    lucide.createIcons();
+document.getElementById('e-logo-input').addEventListener('change', async e=>{
+    const f = e.target.files[0];
+    if(!f) return;
+    try{
+        const data = await readFileAsDataURL(f, 2000);
+        siteData.brand.logo = data;
+        saveData();
+        fillEditorFields();
+    }catch(err){ alert(err); }
+    e.target.value='';
+});
+
+function removeLogo(){ siteData.brand.logo = null; saveData(); fillEditorFields(); }
+
+document.getElementById('e-hero-input').addEventListener('change', async e=>{
+    const f = e.target.files[0];
+    if(!f) return;
+    try{
+        const data = await readFileAsDataURL(f, 3000);
+        siteData.brand.heroImage = data;
+        saveData();
+        fillEditorFields();
+    }catch(err){ alert(err); }
+    e.target.value='';
+});
+
+function removeHero(){ siteData.brand.heroImage = null; saveData(); fillEditorFields(); }
+
+// Products editor
+function renderEditorLists(){
+    const el = document.getElementById('editor-products-list');
+    el.innerHTML = siteData.products.map((p, idx)=> `
+        <div class="border border-gray-200 rounded-xl bg-white p-3">
+            <div class="flex gap-3">
+                <div class="w-16 h-16 rounded-lg bg-gray-100 overflow-hidden shrink-0 relative">
+                    <img src="${escapeHtml(p.image)}" class="w-full h-full object-cover" onerror="this.style.opacity=.35">
+                    <label class="absolute inset-0 cursor-pointer opacity-0 hover:opacity-100 bg-black/30 flex items-center justify-center text-white text-[11px] transition">Trocar
+                        <input type="file" accept="image/*" class="hidden" onchange="updateProductImage(${idx}, this.files[0])">
+                    </label>
+                </div>
+                <div class="flex-1 space-y-2">
+                    <input class="field field-sm" value="${escapeHtml(p.name)}" placeholder="Nome do template" oninput="siteData.products[${idx}].name=this.value; saveData()">
+                    <div class="flex gap-2">
+                        <input class="field field-sm flex-1" value="${escapeHtml(p.price)}" placeholder="Preço" oninput="siteData.products[${idx}].price=this.value; saveData()">
+                        <button class="text-[11.5px] px-2 py-1 rounded-lg bg-red-50 text-red-500 hover:bg-red-100" onclick="removeProduct(${idx})">Excluir</button>
+                    </div>
+                    <input class="field field-sm" value="${escapeHtml(p.desc||'')}" placeholder="Descrição curta" oninput="siteData.products[${idx}].desc=this.value; saveData()">
+                </div>
+            </div>
+        </div>
+    `).join('') || `<div class="text-[13px] text-gray-500">Nenhum template ainda.</div>`;
+
+    const sEl = document.getElementById('editor-services-list');
+    sEl.innerHTML = siteData.services.map((s, idx)=> `
+        <div class="border border-gray-200 rounded-xl bg-white p-3 space-y-2">
+            <input class="field field-sm" value="${escapeHtml(s.name)}" placeholder="Nome do serviço" oninput="siteData.services[${idx}].name=this.value; saveData()">
+            <input class="field field-sm" value="${escapeHtml(s.price||'')}" placeholder="Preço" oninput="siteData.services[${idx}].price=this.value; saveData()">
+            <textarea rows="2" class="field field-sm" placeholder="Descrição" oninput="siteData.services[${idx}].desc=this.value; saveData()">${escapeHtml(s.desc||'')}</textarea>
+            <div class="text-right"><button class="text-[11.5px] text-red-500 hover:text-red-700" onclick="removeService(${idx})">Excluir</button></div>
+        </div>
+    `).join('') || `<div class="text-[13px] text-gray-500">Nenhum serviço ainda.</div>`;
+
+    const gEl = document.getElementById('editor-gallery-grid');
+    gEl.innerHTML = siteData.gallery.map((src, idx)=> `
+        <button class="relative aspect-square rounded-lg overflow-hidden bg-gray-200 group" onclick="removeGalleryImage(${idx})" type="button" title="Remover">
+            <img src="${escapeHtml(src)}" class="w-full h-full object-cover group-hover:opacity-70 transition">
+            <span class="absolute inset-0 flex items-center justify-center text-[11px] text-white opacity-0 group-hover:opacity-100 bg-black/30">Remover</span>
+        </button>
+    `).join('');
+}
+
+function addProduct(){
+    siteData.products.unshift({id:'p'+Date.now(), name:'Novo template', price:'0', image:'https://placehold.co/800x900/e8eef5/6b7280?text=Template', desc:''});
+    saveData();
+    renderEditorLists();
+}
+
+function removeProduct(i){ siteData.products.splice(i,1); saveData(); renderEditorLists(); }
+
+async function updateProductImage(idx, file){
+    if(!file) return;
+    try{
+        const data = await readFileAsDataURL(file, 3000);
+        siteData.products[idx].image = data;
+        saveData();
+        renderEditorLists();
+    }catch(e){ alert(e); }
+}
+
+function addService(){
+    siteData.services.push({id:'s'+Date.now(), name:'Novo serviço', price:'', desc:''});
+    saveData();
+    renderEditorLists();
+}
+
+function removeService(i){ siteData.services.splice(i,1); saveData(); renderEditorLists(); }
+
+document.getElementById('e-gallery-input').addEventListener('change', async e=>{
+    const files = Array.from(e.target.files || []);
+    for(const f of files){
+        try{
+            const data = await readFileAsDataURL(f, 3000);
+            siteData.gallery.push(data);
+        }catch(err){ alert(f.name + ': ' + err); }
+    }
+    saveData();
+    renderEditorLists();
+    e.target.value='';
+});
+
+function removeGalleryImage(i){ siteData.gallery.splice(i,1); saveData(); renderEditorLists(); }
+
+// Export / Import
+function exportSiteData(){
+    const blob = new Blob([JSON.stringify(siteData, null, 2)], {type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = (siteData.brand.name.toLowerCase().replace(/\s+/g,'-') || 'sidmarkting') + '-dados.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+
+document.getElementById('import-input').addEventListener('change', e=>{
+    const f = e.target.files[0];
+    if(!f) return;
+    const reader = new FileReader();
+    reader.onload = ()=>{
+        try{
+            siteData = JSON.parse(reader.result);
+            saveData();
+            fillEditorFields();
+            renderEditorLists();
+            showToast('Dados importados');
+        }catch(err){ alert('Arquivo inválido'); }
+    };
+    reader.readAsText(f);
+    e.target.value='';
+});
+
+function resetDemo(){
+    if(!confirm('Resetar para os dados de demonstração? Suas imagens enviadas serão perdidas.')) return;
+    localStorage.removeItem('sidmarkting_site_v5');
+    siteData = JSON.parse(JSON.stringify(DEFAULT_DATA));
+    saveData();
+    fillEditorFields();
+    renderEditorLists();
+}
+
+// Toast
+let toastTimer;
+function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.opacity = '1';
+    t.style.transform = 'translate(-50%, 0)';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>{
+        t.style.opacity='0';
+        t.style.transform='translate(-50%, 8px)';
+    }, 1650);
+}
+
+// Init
+document.getElementById('footer-year').textContent = new Date().getFullYear();
+renderAll();
+lucide.createIcons();
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click', e=>{
+        const id = a.getAttribute('href');
+        const el = document.querySelector(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
 });
 </script>
 </body>
